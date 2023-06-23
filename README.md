@@ -52,3 +52,4 @@ Intmaxでは、各2500ドルの賞品を2つ用意しています。また、他
 7. [CLIのガイドライン](https://docs.testnet.intmax.io/getting-started/interface-guide)
 8. [intmax rolluo cli](https://github.com/InternetMaximalism/intmax-rollup-cli)
 9. [hardhat-Plugin](https://github.com/mashharuki/intmax-interoperability-plugin)
+10. [Sample-Auction-dapp](https://github.com/InternetMaximalism/intmax-rollup-cli/tree/main/packages/sample-auction-app/ethereum)
