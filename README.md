@@ -165,3 +165,4 @@ Intmax では、各 2500 ドルの賞品を 2 つ用意しています。また�
 9. [hardhat-Plugin](https://github.com/mashharuki/intmax-interoperability-plugin)
 10. [Sample-Auction-dapp](https://github.com/InternetMaximalism/intmax-rollup-cli/tree/main/packages/sample-auction-app/ethereum)
 11. [PRTIMES - INTMAX Walletless Wallet](https://prtimes.jp/main/html/rd/p/000000004.000110841.html)
+12. [INTMAX Wallet Home Page](https://home.wallet.intmax.io/)
