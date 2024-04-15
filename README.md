@@ -168,3 +168,4 @@ Intmax では、各 2500 ドルの賞品を 2 つ用意しています。また�
 12. [INTMAX Wallet Home Page](https://home.wallet.intmax.io/)
 13. [GitHub - intmax-walletsdk](https://github.com/InternetMaximalism/intmax-walletsdk)
 14. [npm - INTMAX WalletSDK](https://www.npmjs.com/package/intmax-walletsdk)
+15. [INTMAX WalletSDK サンプル実装](https://github.com/InternetMaximalism/intmax-walletsdk/blob/main/examples/dapp/src/App.tsx)
