@@ -43,7 +43,13 @@ export const IntmaxProvider = ({
           window: { mode: "popup" },
         },
         metadata: DAPP_METADATA,
-        providers: { eip155: ethereumProvider() },
+        providers: {
+          eip155: ethereumProvider({
+            httpRpcUrls: {
+              80002: process.env.NEXT_PUBLIC_AMOY_RPC_URL!,
+            },
+          }),
+        },
       });
       // SDK インスタンスをセット
       setSdk(client);
