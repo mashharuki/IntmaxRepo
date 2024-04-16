@@ -155,7 +155,7 @@ Intmax では、各 2500 ドルの賞品を 2 つ用意しています。また�
 ### 参考文献
 
 1. [Scaling Ethereum 2023](https://ethglobal.com/events/scaling2023/prizes/intmax-intmax-5ejin)
-2. [webmax.js Public](https://github.com/InternetMaximalism/webmax.js)
+2. [GitHub - webmax.js Public](https://github.com/InternetMaximalism/webmax.js)
 3. [Intmax Wallet](https://drive.google.com/file/d/16AcEheRMEtX9GgjOcQiFQZNQR8ZCPAS0/view)
 4. [IntMax の公式サイト](https://intmax.io/)
 5. [GetStarted](https://docs.testnet.intmax.io/getting-started/overview)

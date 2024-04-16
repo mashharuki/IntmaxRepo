@@ -1,0 +1,285 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #884c30;
+}
+
+.linkWrapper {
+  margin-top: 15px;
+}
+
+.read-the-docs:hover {
+  color: #b84814;
+  transition: 0.7s;
+}
+
+.demoButton {
+  background-color: #884c30;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.demoButton:hover {
+  background-color: #b84814;
+  transition: 0.7s;
+}
+
+.viewNFT {
+  color: #b84814;
+}
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.readDocs {
+  color: #ff4e17;
+}
+
+.linkWrapper {
+  margin-top: 15px;
+}
+
+.readDocs:hover {
+  color: #b84814;
+  transition: 0.7s;
+}
+
+.demoButton {
+  background-color: #ff4e17;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.demoButton:hover {
+  background-color: #b84814;
+  transition: 0.7s;
+}
+
+.viewNFT {
+  color: #ff4e17;
+}
+
+.demoContainter {
+  text-align: center;
+  width: 100vw;
+}
+
+.main {
+  text-align: center;
+  width: 100vw;
+}
+
+.connect {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.loading {
+  text-align: center;
+  margin: 5px;
+}
+
+.playButton {
+  border: none;
+  padding: 0.8em 2.5em;
+  margin: 10px;
+  outline: none;
+  color: white;
+  font-style: 1.2em;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  background: none;
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.45);
+}
+
+.playButton:before,
+.playButton:after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 10em;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  width: 105%;
+  height: 105%;
+  content: "";
+  z-index: -2;
+  background-size: 400% 400%;
+  background: linear-gradient(
+    60deg,
+    #f79533,
+    #f37055,
+    #ef4e7b,
+    #a166ab,
+    #5073b8,
+    #1098ad,
+    #07b39b,
+    #6fba82
+  );
+}
+
+.playButton:before {
+  -webkit-filter: blur(7px);
+  filter: blur(7px);
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+  -webkit-animation: pulse 10s infinite ease;
+  animation: pulse 10s infinite ease;
+}
+
+.playButton:after {
+  -webkit-filter: blur(0.3px);
+  filter: blur(0.3px);
+}
+
+.playButton:hover:before {
+  width: 115%;
+  height: 115%;
+}
+
+.authButton {
+  border: 5em;
+  cursor: pointer;
+  outline: none;
+  font-size: 16px;
+  -webkit-transform: translate(0);
+  transform: translate(0);
+  background-image: linear-gradient(45deg, #4568dc, #b06ab3);
+  padding: 0.7em 2em;
+  border-radius: 65px;
+  box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.438);
+  -webkit-transition: box-shadow 0.25s;
+  transition: box-shadow 0.25s;
+  color: white;
+}
+
+.authButton .text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(45deg, #4568dc, #b06ab3);
+}
+
+.authButton:after {
+  content: "";
+  border-radius: 18px;
+  position: absolute;
+  margin: 4px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  background: #0e0e10;
+}
+
+.authButton:hover {
+  background-image: linear-gradient(-45deg, #4568dc, #b06ab3);
+  box-shadow: 0 12px 24px rgba(128, 128, 128, 0.1);
+}
+
+.authButton:hover .text {
+  background-image: linear-gradient(-45deg, #4568dc, #b06ab3);
+}
+
+.neonText {
+  animation: flicker 1.5s infinite alternate;
+  color: #fff;
+}
+
+/* Flickering animation */
+@keyframes flicker {
+  0%,
+  18%,
+  22%,
+  25%,
+  53%,
+  57%,
+  100% {
+    text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 0 0 40px #0fa,
+      0 0 80px #0fa, 0 0 90px #0fa, 0 0 100px #0fa, 0 0 150px #0fa;
+  }
+
+  20%,
+  24%,
+  55% {
+    text-shadow: none;
+  }
+}
+
+.main {
+  color: #fff;
+}
