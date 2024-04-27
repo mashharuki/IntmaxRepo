@@ -24,7 +24,7 @@ IntMax を調査・学習するためのリポジトリです。
 コンセプト  
 Solidity で書かれたスマートコントラクトで、INTMAX や他のネットワーク上での資産交換のオファーを管理する。このコントラクトにより、ユーザーは新しいオファーを登録したり、既存のオファーのテイカーを更新したりすることができる。オファーは、支払いと引き換えにテイカーのアセットをメイカーに譲渡することで有効化される。このコントラクトには、オファーの登録、有効化、無効化を追跡するためのイベントも含まれています。関数 nextOfferId は、次に登録されるオファーの ID を返します。
 
-## Scaling Ethereum 2023 のルール
+## Scaling Ethereum 2023 のルール(deepql で翻訳したもの)
 
 について
 Intmax は、Layer 2 の 10 億ユーザー普及を推進するプロジェクトです。
@@ -42,10 +42,6 @@ Intmax は、Layer 2 の 10 億ユーザー普及を推進するプロジェク�
 
 Intmax では、各 2500 ドルの賞品を 2 つ用意しています。また、他のロールアップも賞品を提供しているので、イントマックスの webmax.js を使ってロールアップで dApps を開発すれば、賞品が 2 倍になるチャンスです
 
-## テスト用の作成したアドレス
-
-0xC4C4E9135B809Ea4609C07D83267FC101BDad35C
-
 ## CLI の実行例
 
 - アカウント作成
@@ -61,6 +57,10 @@ Intmax では、各 2500 ドルの賞品を 2 つ用意しています。また�
   new account added: 0x77fdf4c73a87a34d
   set the above account as default
   ```
+
+- テスト用の作成したアドレス
+
+  0xC4C4E9135B809Ea4609C07D83267FC101BDad35C
 
 - ニックネームを指定してアカウント作成
 
@@ -152,6 +152,14 @@ Intmax では、各 2500 ドルの賞品を 2 つ用意しています。また�
   transaction mined in block number 3271652
   ```
 
+## WalletSDK
+
+- インストール
+
+  ```bash
+  yarn add intmax-walletsdk
+  ```
+
 ### 参考文献
 
 1. [Scaling Ethereum 2023](https://ethglobal.com/events/scaling2023/prizes/intmax-intmax-5ejin)
@@ -169,3 +177,4 @@ Intmax では、各 2500 ドルの賞品を 2 つ用意しています。また�
 13. [GitHub - intmax-walletsdk](https://github.com/InternetMaximalism/intmax-walletsdk)
 14. [npm - INTMAX WalletSDK](https://www.npmjs.com/package/intmax-walletsdk)
 15. [INTMAX WalletSDK サンプル実装](https://github.com/InternetMaximalism/intmax-walletsdk/blob/main/examples/dapp/src/App.tsx)
+16. [INTMAX Wallet SDK - GitBook](https://intmax-wallet.gitbook.io/intmax-walletsdk)

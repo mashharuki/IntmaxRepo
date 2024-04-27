@@ -32,7 +32,7 @@ export const IntmaxProvider = ({
         wallet: {
           url: DEFAULT_WALLET_URL,
           name: "DEMO Wallet",
-          window: { mode: "popup" },
+          window: { mode: "iframe" },
         },
         metadata: DAPP_METADATA,
         providers: {
