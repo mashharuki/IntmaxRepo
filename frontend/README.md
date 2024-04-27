@@ -39,12 +39,4 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-## 作成したアドレス
-
-0x8f828fb8FE67345Fa672C84F1aed26Be722486d8
-
-## 送金した記録(Sepolia)
-
-[https://sepolia.etherscan.io/address/0x8f828fb8fe67345fa672c84f1aed26be722486d8](https://sepolia.etherscan.io/address/0x8f828fb8fe67345fa672c84f1aed26be722486d8)
-
 ## エラー内容
