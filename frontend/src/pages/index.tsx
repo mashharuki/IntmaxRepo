@@ -1,9 +1,9 @@
 import Header from "@/components/Header";
 import Loading from "@/components/Loading";
+import Toaster from "@/components/Toaster";
 import { IntmaxContext } from "@/context/IntmaxProvider";
 import styles from "@/styles/Home.module.css";
 import { useContext } from "react";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 /**
@@ -38,18 +38,7 @@ export default function Home() {
             </button>
           </>
         )}
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        />
+        <Toaster />
       </main>
     </>
   );
