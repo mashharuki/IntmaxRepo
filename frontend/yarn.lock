@@ -2772,10 +2772,10 @@ internal-slot@^1.0.7:
     hasown "^2.0.0"
     side-channel "^1.0.4"
 
-intmax-walletsdk@0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/intmax-walletsdk/-/intmax-walletsdk-0.0.3.tgz#ddb0f1725250e1fe525b834ae41401a35a8e04b3"
-  integrity sha512-d+VKYLHMfp3cMND3tr/P23RI6YmHqEJWKBX9Xv0lSgSRDSxg6Riclfnfj30OVAlEZ/l+3QwPB08DjXhnASmSvw==
+intmax-walletsdk@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/intmax-walletsdk/-/intmax-walletsdk-0.0.4.tgz#48d402c11a749abb6e30d617947c711bf6e32382"
+  integrity sha512-oNqT/VvG1d14h2Zxbt6ML/KCVR4pK4HYtGtaWyZN9VJKAXtF+fzDd8j0zqSYZYKZtEOX0iAFSaiuTYXOd7bRTw==
   dependencies:
     eventemitter3 "^5.0.1"
     svelte "^4.2.11"
