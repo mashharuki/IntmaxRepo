@@ -51,6 +51,15 @@ export default function Home() {
                 >
                   Send Sample Tx
                 </button>
+                <button
+                  onClick={async () => {
+                    // ガスレストランザクションを実行
+                    await intmaxContext.gasslessRequest();
+                  }}
+                  className={styles.authButton}
+                >
+                  Send GasslessRequest
+                </button>
               </>
             ) : (
               <button onClick={connect} className={styles.authButton}>

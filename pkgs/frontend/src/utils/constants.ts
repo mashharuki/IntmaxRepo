@@ -9,3 +9,7 @@ export const DAPP_METADATA = {
   description: "This is a simple Application.",
   icons: [DEFAULT_DAPP_ICON],
 };
+export const FORWARDER_CONTRACT_ADDRESS =
+  "0xbfDe6e57dD7f54D496B896f6c7d551eE40d3BEB0";
+export const HELLOWORLD_CONTRACT_ADDRESS =
+  "0xEbdef95c2f60D070bD5f10E9D69F55943169A108";
