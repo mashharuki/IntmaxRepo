@@ -1,0 +1,16 @@
+{
+  "name": "IntmaxRepo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "repository": "https://github.com/mashharuki/PushFi.git",
+  "author": "Haruki Kondo",
+  "license": "MIT",
+  "workspaces": [
+    "pkgs/*"
+  ],
+  "scripts": {
+    "frontend": "yarn workspace frontend",
+    "backend": "yarn workspace backend"
+  }
+}

@@ -160,6 +160,38 @@ Intmax では、各 2500 ドルの賞品を 2 つ用意しています。また�
   yarn add intmax-walletsdk
   ```
 
+## WalletSDK 用のサンプルアプリ起動方法
+
+- インストール
+
+  ```bash
+  yarn
+  ```
+
+- デプロイ
+
+  ```bash
+  yarn backend deploy:scrollSepolia
+  ```
+
+  デプロイ済みコントラクト(ScrollSepolia)
+
+  [SampleForwarder](https://sepolia.scrollscan.com/address/0x32F9d19A89b65F91da684ee25136CF692673A160#code)
+
+  [HelloWorld](https://sepolia.scrollscan.com/address/0x5e86a9F80E4Dec74573fe75F62090Cb28a1B5760#code)
+
+- 検証
+
+  ```bash
+  yarn backend verify:scrollSepolia
+  ```
+
+- ガスレスでサンプルコントラクトの機能を呼び出す
+
+  ```bash
+  yarn backend gaslessSetNewText:scrollSepolia
+  ```
+
 ### 参考文献
 
 1. [Scaling Ethereum 2023](https://ethglobal.com/events/scaling2023/prizes/intmax-intmax-5ejin)
