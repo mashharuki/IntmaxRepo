@@ -16,8 +16,6 @@ const getRelayer = async () => {
     apiSecret: process.env.DEFENDER_SECRET_KEY,
   };
 
-  console.log(credentials);
-
   const ozProvider = new DefenderRelayProvider(credentials);
   const ozSigner = new DefenderRelaySigner(credentials, ozProvider, {
     speed: "fast",
@@ -74,7 +72,9 @@ export default async function handler(
     if (!result) throw "invalid request data!";
 
     // call execute method from relayer
-    await forwarder.execute(request);
+    const result2 = await forwarder.execute(request);
+
+    console.log(result2);
 
     console.log(
       " ========================================= [RequestRaler: END] =============================================="
@@ -82,6 +82,7 @@ export default async function handler(
     res.setHeader("Content-Type", "text/json");
     res.status(200).json({
       result: "ok",
+      txHash: result2.hash,
     });
   } catch (error) {
     console.error("Error requestRelayer :", error);

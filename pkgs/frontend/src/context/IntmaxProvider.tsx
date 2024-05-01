@@ -227,7 +227,7 @@ export const IntmaxProvider = ({
 
       const encodedData: any = helloWorld.interface.encodeFunctionData(
         "setNewText",
-        ["hello!!"]
+        ["hello INTMAXX!!"]
       );
 
       // get domain
@@ -238,33 +238,34 @@ export const IntmaxProvider = ({
       console.log("encodedData:", encodedData);
       console.log("domain:", domain);
       console.log("uint48Time:", uint48Time);
+
+      // test sign messages
+      const typedData = {
+        domain: {
+          name: domain[1],
+          version: domain[2],
+          chainId: CHAIN_ID, // scroll sepolia
+          verifyingContract: domain[4].toString(),
+        },
+        types: {
+          ForwardRequest: ForwardRequest,
+        },
+        primaryType: "ForwardRequest",
+        message: {
+          from: address.toString(),
+          to: HELLOWORLD_CONTRACT_ADDRESS.toString(),
+          value: 0,
+          gas: 360000,
+          nonce: (await forwarder.nonces(address)).toString(),
+          deadline: uint48Time.toString(),
+          data: encodedData.toString(),
+        },
+      };
+
       // create request data
       const sig = await ethereum.request({
         method: "eth_signTypedData_v4",
-        params: [
-          address,
-          {
-            domain: {
-              name: domain[1],
-              version: domain[2],
-              chainId: CHAIN_ID, // scroll sepolia
-              verifyingContract: domain[4] as any,
-            },
-            types: {
-              ForwardRequest: ForwardRequest,
-            },
-            primaryType: "ForwardRequest",
-            message: {
-              from: address,
-              to: HELLOWORLD_CONTRACT_ADDRESS,
-              value: 0,
-              gas: 360000,
-              nonce: await forwarder.nonces(address),
-              deadline: uint48Time.toString(),
-              data: encodedData,
-            },
-          },
-        ],
+        params: [address, JSON.stringify(typedData)],
       });
 
       console.log("sig:", sig);

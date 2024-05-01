@@ -51,6 +51,7 @@ export default function Home() {
                 >
                   Send Sample Tx
                 </button>
+                <br />
                 <button
                   onClick={async () => {
                     // ガスレストランザクションを実行
