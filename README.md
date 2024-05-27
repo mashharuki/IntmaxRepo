@@ -2,9 +2,10 @@
 
 IntMax を調査・学習するためのリポジトリです。
 
-## IntMaxの凄さ
+## IntMax の凄さ
 
-Intmaxは世界で初めてスケーラビリティとプライバシーの両立を実現したEthereum Layer2として期待をされている。
+Intmax は世界で初めてスケーラビリティとプライバシーの両立を実現した Ethereum Layer2 として期待をされている。  
+ステートレスな RollUp は他のロールアップ系のプロジェクトとは別のアプローチをとっている。
 
 ## IntMax について
 
@@ -214,6 +215,8 @@ Intmax では、各 2500 ドルの賞品を 2 つ用意しています。また�
 14. [npm - INTMAX WalletSDK](https://www.npmjs.com/package/intmax-walletsdk)
 15. [INTMAX WalletSDK サンプル実装](https://github.com/InternetMaximalism/intmax-walletsdk/blob/main/examples/dapp/src/App.tsx)
 16. [INTMAX Wallet SDK - GitBook](https://intmax-wallet.gitbook.io/intmax-walletsdk)
-17. [レイヤー2「INTMAX」とは？真の金融インフラを開発する日置玲於奈氏の展望に迫る](https://meta-bank.jp/theme/intmax-hioki/)
-18. [INTMAX、「Plasma Next」メイネットαをローンチ。Plasmaの完成により拡張性向上](https://news.yahoo.co.jp/articles/741cb91f613971f44d91a8c982a5bf49bf955e4d)
+17. [レイヤー 2「INTMAX」とは？真の金融インフラを開発する日置玲於奈氏の展望に迫る](https://meta-bank.jp/theme/intmax-hioki/)
+18. [INTMAX、「Plasma Next」メイネット α をローンチ。Plasma の完成により拡張性向上](https://news.yahoo.co.jp/articles/741cb91f613971f44d91a8c982a5bf49bf955e4d)
 19. [大衆向けイーサリアムのスケーリング: INTMAX が Plasma Next を発表](https://hackernoon.com/ja/%E5%A4%A7%E8%A1%86%E5%90%91%E3%81%91%E3%82%A4%E3%83%BC%E3%82%B5%E3%83%AA%E3%82%A2%E3%83%A0%E3%81%AE%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%AA%E3%83%B3%E3%82%B0-intmax-%E3%81%8C%E6%AC%A1%E3%81%AB%E3%83%97%E3%83%A9%E3%82%BA%E3%83%9E%E3%82%92%E7%99%BA%E8%A1%A8)
+20. [INTMAX ホワイトペーパー](https://eprint.iacr.org/2023/1082.pdf)
+21. [Plasma Next: Plasma without Online Requirements](https://hackmd.io/@leonahioki/SJQixupj6)
