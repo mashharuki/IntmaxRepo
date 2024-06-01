@@ -167,16 +167,79 @@ Intmax では、各 2500 ドルの賞品を 2 つ用意しています。また�
 
 ## WalletSDK 用のサンプルアプリ起動方法
 
+- 事前準備
+
+  1.  Scroll Sepolia の faucet を取得すること
+
+      以下サイトで取得できます。
+
+      - [learnweb3 Faucet](https://learnweb3.io/faucets/)
+      - [ETHGlobal faucet](https://ethglobal.com/faucet)
+      - [Scroll が紹介している faucet 用のサイト](https://docs.scroll.io/en/user-guide/faucet/)
+
+      以上にアクセスして Faucet を首都すること！！
+
+  2.  ScrollScan の API を取得すること
+
+      デプロイしたコントラクトを Verify するのに使うので以下サイトにアクセスして API キーを作成する。
+
+      [ScrollScan API Key](https://scrollscan.com/myapikey)
+
+  3.  OpenZepplin Defender にログインして ScrollSepolia 上で Relayer を作成し、API キーを取得すること。
+
+      [OpenZeppelin Defender Relayer](https://defender.openzeppelin.com/v2/#/manage/relayers)
+
+  4.  上記で作成した Relayer のウォレットアドレスに小学の ETH を送金する(Scroll Sepolia 上で送金してください！！)。
+
+      [OpenZeppelin Defender で作成した Relayer アドレス - ScrollScan](https://sepolia.scrollscan.dev/address/0x1B38AB190EDf2bb4BcB2EC0b6639426731861581)
+
+  5.  環境変数の設定
+
+           環境変数は`backend`と`frontend`でそれぞれ設定する。
+
+           - backend 側の環境変数の設定
+
+             `.env`ファイルを`backend`フォルダ配下に作成する。
+
+             そして以下の環境変数を設定する。
+
+             ```txt
+              PRIVATE_KEY=
+              SCROLLSCAN_API_KEY=
+              DEFENDER_API_KEY=
+              DEFENDER_SECRET_KEY=
+             ```
+
+             `PRIVATE_KEY`はMetamaskからコピペしてくる。
+
+             `SCROLLSCAN_API_KEY`と`DEFENDER_API_KEY`と`DEFENDER_SECRET_KEY`は上記で取得してきたものを貼り付ける。
+
+          - frontend側の環境変数の設定
+
+            `.env.local`ファイルを`frontend`フォルダ配下に作成する。
+
+            そして以下の環境変数を設定する。
+
+            ```txt
+              NEXT_PUBLIC_APP_ICON="https://intmaxwallet-sdk-wallet.vercel.app/vite.svg"
+              NEXT_PUBLIC_WALLET_URL="https://intmaxwallet-sdk-wallet.vercel.app/"
+              NEXT_PUBLIC_RPC_URL="https://sepolia-rpc.scroll.io/"
+              DEFENDER_API_KEY=
+              DEFENDER_SECRET_KEY=
+            ```
+
+            `DEFENDER_API_KEY`と`DEFENDER_SECRET_KEY`は上記で取得してきたものを貼り付ける。
+
 - インストール
 
   ```bash
   yarn
   ```
 
-- デプロイ
+- スマートコントラクト　デプロイ
 
   ```bash
-  yarn backend deploy:scrollSepolia
+  yarn backend deploy --network scrollSepolia
   ```
 
   デプロイ済みコントラクト(ScrollSepolia)
@@ -188,13 +251,31 @@ Intmax では、各 2500 ドルの賞品を 2 つ用意しています。また�
 - 検証
 
   ```bash
-  yarn backend verify:scrollSepolia
+  yarn backend verify --network scrollSepolia
   ```
 
 - ガスレスでサンプルコントラクトの機能を呼び出す
 
   ```bash
-  yarn backend gaslessSetNewText:scrollSepolia
+  yarn backend gaslessSetNewText --network scrollSepolia
+  ```
+
+- コントラクトに保存されている Text の値を取得する。
+
+  ```bash
+  yarn backend getText --network scrollSepolia
+  ```
+
+- フロントエンドビルド
+
+  ```bash
+  yarn frontend build
+  ```
+
+- フロントエンド起動
+
+  ```bash
+  yarn fronend dev
   ```
 
 ### 参考文献

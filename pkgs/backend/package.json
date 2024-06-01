@@ -10,9 +10,10 @@
     "compile": "hardhat compile",
     "lint": "solhint 'contracts/**/*.sol' -- --fix",
     "cp:contracts": "cp -r ./artifacts/contracts ../frontend",
-    "deploy:scrollSepolia": "hardhat run scripts/deploy.ts --network scrollSepolia",
-    "verify:scrollSepolia": "npx hardhat verify --network scrollSepolia",
-    "gaslessSetNewText:scrollSepolia": "npx hardhat run scripts/relay/gaslessSetScore.ts --network scrollSepolia"
+    "deploy": "hardhat run scripts/deploy.ts",
+    "verify": "npx hardhat verify",
+    "gaslessSetNewText": "npx hardhat run scripts/relay/gaslessSetScore.ts",
+    "getText": "npx hardhat getText"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.1",
