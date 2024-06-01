@@ -65,21 +65,21 @@
 
         `SCROLLSCAN_API_KEY`と`DEFENDER_API_KEY`と`DEFENDER_SECRET_KEY`は上記で取得してきたものを貼り付ける。
 
-  - frontend 側の環境変数の設定
+      - frontend 側の環境変数の設定
 
-    `.env.local`ファイルを`frontend`フォルダ配下に作成する。
+        `.env.local`ファイルを`frontend`フォルダ配下に作成する。
 
-    そして以下の環境変数を設定する。
+        そして以下の環境変数を設定する。
 
-    ```txt
-      NEXT_PUBLIC_APP_ICON="https://intmaxwallet-sdk-wallet.vercel.app/vite.svg"
-      NEXT_PUBLIC_WALLET_URL="https://intmaxwallet-sdk-wallet.vercel.app/"
-      NEXT_PUBLIC_RPC_URL="https://sepolia-rpc.scroll.io/"
-      DEFENDER_API_KEY=
-      DEFENDER_SECRET_KEY=
-    ```
+        ```txt
+          NEXT_PUBLIC_APP_ICON="https://intmaxwallet-sdk-wallet.vercel.app/vite.svg"
+          NEXT_PUBLIC_WALLET_URL="https://intmaxwallet-sdk-wallet.vercel.app/"
+          NEXT_PUBLIC_RPC_URL="https://sepolia-rpc.scroll.io/"
+          DEFENDER_API_KEY=
+          DEFENDER_SECRET_KEY=
+        ```
 
-    `DEFENDER_API_KEY`と`DEFENDER_SECRET_KEY`は上記で取得してきたものを貼り付ける。
+        `DEFENDER_API_KEY`と`DEFENDER_SECRET_KEY`は上記で取得してきたものを貼り付ける。
 
 - インストール
 
