@@ -77,6 +77,9 @@ async function createRequestData(
   return request;
 }
 
+/**
+ * メイン関数
+ */
 async function main() {
   console.log(
     ` ============================================== [GaslessSetNewText:start] ================================================ `

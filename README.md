@@ -99,25 +99,40 @@
   yarn backend deploy --network scrollSepolia
   ```
 
+  デプロイされたコントラクトのアドレスは、`pkgs/backend/outputs/contracts-scrollSepolia.json`に記載されます。
+
+  もしデプロイがうまくいかないという場合には以下のデプロイ済みコントラクトのアドレスを使ってみてください！
+
   デプロイ済みコントラクト(ScrollSepolia)
 
   [SampleForwarder](https://sepolia.scrollscan.com/address/0x32F9d19A89b65F91da684ee25136CF692673A160#code)
 
   [HelloWorld](https://sepolia.scrollscan.com/address/0x5e86a9F80E4Dec74573fe75F62090Cb28a1B5760#code)
 
-- 検証
+- フロントエンドの定数ファイルの値を更新する。
+
+  `pkgs/frontend/src/utils/constants.ts`でコントラクトのアドレスを設定しているので、上記でデプロイしたコントラクトのアドレスに更新します。
+
+  ```ts
+  export const FORWARDER_CONTRACT_ADDRESS =　<デプロイしたアドレス>;
+  export const HELLOWORLD_CONTRACT_ADDRESS = <デプロイしたアドレス>;
+  ```
+
+- 検証(オプション)
 
   ```bash
   yarn backend verify --network scrollSepolia
   ```
 
-- ガスレスでサンプルコントラクトの機能を呼び出す
+- ガスレスでサンプルコントラクトの機能を呼び出す(オプション)
 
   ```bash
   yarn backend gaslessSetNewText --network scrollSepolia
   ```
 
 - コントラクトに保存されている Text の値を取得する。
+
+  初期値は、空文字です。
 
   ```bash
   yarn backend getText --network scrollSepolia
@@ -133,6 +148,107 @@
 
   ```bash
   yarn fronend dev
+  ```
+
+  以下のような画面が立ち上がるので`Let's Login`ボタンを押す！
+
+  ![](./docs/imgs/handson/4.png)
+
+  ポップアップが表示されるので`Sign`ボタンを押す！
+
+  ![](./docs/imgs/handson/5.png)
+
+  うまく処理されれば INTMAX Wallet SDK のメソッドが呼び出されて Wallet が作成される！！
+
+- ガスレスでコントラクトに保存されている値を更新してみる。
+
+  うまく Wallet が作成できたらいよいよガスレストランザクションを実行!!
+
+  `SendGaslessRequest`ボタンを押す！
+
+  ![](./docs/imgs/handson/6.png)
+
+  ポップアップが表示されるので`Sign`ボタンを押す!
+
+  ![](./docs/imgs/handson/7.png)
+
+  Success というポップアップが表示されたら OK!!
+
+  ![](./docs/imgs/handson/8.png)
+
+  一応、コンソールの方にも API の処理のログが出力されているので以下のような内容が出力されている確認する。
+
+  トランザクションデータが出力されていれば OK!!
+
+  ```bash
+   ========================================= [RequestRaler: START] ==============================================
+  request: {
+    from: '0x8f828fb8FE67345Fa672C84F1aed26Be722486d8',
+    to: '0xEbdef95c2f60D070bD5f10E9D69F55943169A108',
+    value: 0n,
+    gas: 360000n,
+    nonce: 5n,
+    deadline: 1717249611n,
+    data: '0x2742d0f60000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000f68656c6c6f20494e544d41585821210000000000000000000000000000000000',
+    signature: '0xbcd2f0729f165096002568c3c2a8523ac12892646a0f756dde69528b132261e6186825fb5ea2549048a1e5f3e46cb65e86b5248098d25e9287d4d9ec0e98a6e01c'
+  }
+  true
+  ContractTransactionResponse {
+    provider: DefenderRelayProvider {
+      _isProvider: true,
+      _events: [],
+      _emitted: { block: -2 },
+      disableCcipRead: false,
+      formatter: Formatter { formats: [Object] },
+      anyNetwork: false,
+      _networkPromise: Promise { [Object] },
+      _maxInternalBlockNumber: -1024,
+      _lastBlockNumber: -2,
+      _maxFilterBlockRange: 10,
+      _pollingInterval: 4000,
+      _fastQueryDate: 0,
+      connection: { url: 'https://api.defender.openzeppelin.com/' },
+      _nextId: 42,
+      credentials: {
+        apiKey: '2qUXLXu3Jzsykrn23R7QL1LBvF2BpZQT',
+        apiSecret: '3kSDBbFurB48YXRp83n6EVxzy8vN64P9d4BNUYbpytLNGEpwDBnLsER1oEwjXNuv'
+      },
+      relayer: Relayer { relayer: [ApiRelayer] },
+      _network: { chainId: 534351, name: 'unknown' }
+    },
+    blockNumber: null,
+    blockHash: null,
+    index: undefined,
+    hash: '0xee52b5a1755695fdf0b2423c17f4aaa6d8f7029bbd88b0d9eaebc03f987faa99',
+    type: undefined,
+    to: '0xbfDe6e57dD7f54D496B896f6c7d551eE40d3BEB0',
+    from: '0x1b38ab190edf2bb4bcb2ec0b6639426731861581',
+    nonce: 77,
+    gasLimit: BigNumber { _hex: '0xe08e', _isBigNumber: true },
+    gasPrice: BigNumber { _hex: '0x012a05f200', _isBigNumber: true },
+    maxPriorityFeePerGas: null,
+    maxFeePerGas: null,
+    maxFeePerBlobGas: null,
+    data: '0xdf905caf00000000000000000000000000000000000000000000000000000000000000200000000000000000000000008f828fb8fe67345fa672c84f1aed26be722486d8000000000000000000000000ebdef95c2f60d070bd5f10e9d69f55943169a10800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000057e4000000000000000000000000000000000000000000000000000000000665b264b00000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000018000000000000000000000000000000000000000000000000000000000000000642742d0f60000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000f68656c6c6f20494e544d41585821210000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000041bcd2f0729f165096002568c3c2a8523ac12892646a0f756dde69528b132261e6186825fb5ea2549048a1e5f3e46cb65e86b5248098d25e9287d4d9ec0e98a6e01c00000000000000000000000000000000000000000000000000000000000000',
+    value: BigNumber { _hex: '0x00', _isBigNumber: true },
+    chainId: 534351,
+    signature: {
+      r: '0x90005745431353f4ea2a51cda382b168d1b5867b2905feb0a74eb76f28529c21',
+      s: '0x6012a792fb7e7b211525991f26b4bfc8919d2864cf6cebca9f7558e43074c8f0',
+      v: '0x104ec2'
+    },
+    accessList: null,
+    blobVersionedHashes: null
+  }
+  ========================================= [RequestRaler: END] ==============================================
+  ```
+
+- もう一回コントラクトに保存されている Text の値を取得する。
+
+  更新されているはず！！
+
+  ```bash
+  yarn backend getText --network scrollSepolia
   ```
 
 ## ソースコードの解説(INTMAX Wallet SDK に関する部分)
