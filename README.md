@@ -262,7 +262,9 @@ INTMAX Wallet SDK に関する実装は全て `pkgs/frontend/src/context/IntmaxP
 3. トランザクションを送信するメソッド
 4. ガスレスでトランザクションを送信するメソッド
 
-5. の部分では`intmax-walletsdk/dapp`の`ethereumProvider`と`intmaxDappClient`を使って実装しています！！
+順番に説明していきます
+
+1. の部分では`intmax-walletsdk/dapp`の`ethereumProvider`と`intmaxDappClient`を使って実装しています！！
 
 ```ts
 /**
