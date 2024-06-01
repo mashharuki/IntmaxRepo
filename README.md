@@ -1,171 +1,14 @@
 # IntmaxRepo
 
-IntMax を調査・学習するためのリポジトリです。
-
-## IntMax の凄さ
-
-Intmax は世界で初めてスケーラビリティとプライバシーの両立を実現した Ethereum Layer2 として期待をされている。  
-ステートレスな RollUp は他のロールアップ系のプロジェクトとは別のアプローチをとっている。
-
-## IntMax について
-
-現在、以下の機能をサポートしています。
-
-- アカウント作成
-- アカウントの表示
-- アカウントのリセット
-- デフォルトアカウントの変更
-- ミントトークン
-- トークンの送信
-- アセットを表示する
-- 一括造幣局
-- 一括送金
-- ヘルプ
-- これらの機能の詳細な使用方法については、Readme を参照してください。  
-  INTMAX をより深く理解するために、これらの機能を何度でも試すことができます。
-
-## プラグインのコンセプト(日本語訳)
-
-コンセプト  
-Solidity で書かれたスマートコントラクトで、INTMAX や他のネットワーク上での資産交換のオファーを管理する。このコントラクトにより、ユーザーは新しいオファーを登録したり、既存のオファーのテイカーを更新したりすることができる。オファーは、支払いと引き換えにテイカーのアセットをメイカーに譲渡することで有効化される。このコントラクトには、オファーの登録、有効化、無効化を追跡するためのイベントも含まれています。関数 nextOfferId は、次に登録されるオファーの ID を返します。
-
-## Scaling Ethereum 2023 のルール(deepql で翻訳したもの)
-
-について
-Intmax は、Layer 2 の 10 億ユーザー普及を推進するプロジェクトです。
-
-そのために行っていることは 2 つあります。
-
-1️⃣ Intmax protocol、相互運用性のある完全なステートレス Layer2。
-
-2️⃣ Intmax wallet、生体認証を備えたすべての Layer2 用のウォレットレスウォレット。既存のフロントエンドに webmax.js を追加するだけで、これらの機能を即座に手に入れることができます。
-
-今回は、 2️⃣ Intmax Wallet の賞品をプレゼントします。
-
-賞品内容
-賞品 🏆 各 2,500 ドル
-
-Intmax では、各 2500 ドルの賞品を 2 つ用意しています。また、他のロールアップも賞品を提供しているので、イントマックスの webmax.js を使ってロールアップで dApps を開発すれば、賞品が 2 倍になるチャンスです
-
-## CLI の実行例
-
-- アカウント作成
-
-  ```bash
-  intmax account add --default
-  ```
-
-  実行結果
-
-  ```bash
-  Wallet initialized
-  new account added: 0x77fdf4c73a87a34d
-  set the above account as default
-  ```
-
-- テスト用の作成したアドレス
-
-  0xC4C4E9135B809Ea4609C07D83267FC101BDad35C
-
-- ニックネームを指定してアカウント作成
-
-  ```bash
-  intmax account add --nickname bob
-  ```
-
-- トークン発行
-
-  ```bash
-  intmax tx mint --amount 10000 -i 0x00
-  ```
-
-- 残高の確認
-
-  ```bash
-  intmax account assets
-  ```
-
-  実行結果
-
-  ```bash
-  User: 0x77fdf4c73a87a34d
-  --------------------------------------------------------------------------------------
-    Token Address | 0x77fdf4c73a87a34d
-    Token ID      | 0x00
-    Amount        | 10010
-  --------------------------------------------------------------------------------------
-  ```
-
-- トークンの送金
-
-  ```bash
-  intmax tx send --amount 100 -i 0x00 --receiver-address bob
-  ```
-
-  実行例
-
-  ```bash
-  start proving: user_tx_proof
-  prove: 1.919 sec
-  transaction hash is 0xd6fca12cb37e6c7f1663ea3a5505d92d2773d10cf4d426435f515a225d9b423e (INTMAX)
-  broadcast transaction successfully
-  start proving: received_signature
-  prove: 0.011 sec
-  send received signature successfully
-  ```
-
-- Make Offer
-
-  ```bash
-  intmax io register --network scroll --maker-amount 1 --receiver-address carol --taker-token 0x0000000000000000000000000000000000000000 --taker-amount 1000000000000000 -u bob
-  ```
-
-  実行結果
-
-  ```bash
-  WARNING: DO NOT interrupt execution of this program while a transaction is being sent.
-  start proving: user_tx_proof
-  prove: 1.949 sec
-  transaction hash is 0xe48ed22a25c7b16d9fedf7d10be34e73025691840e18455863766839f0466e77 (INTMAX)
-  WARNING: DO NOT interrupt execution of this program while a transaction is being sent.
-  start proving: user_tx_proof
-  prove: 2.004 sec
-  transaction hash is 0xea31d2608fc038b7224e8ce5f211aa73a5be25f9b72bb28507691fb203201ee0 (INTMAX)
-  broadcast transaction successfully
-  start proving: received_signature
-  prove: 0.025 sec
-  send received signature successfully
-  start register()
-  transaction hash is https://blockscout.scroll.io/tx/0xf551b2eff33037c4a6fae3c0cc9d8eb71991c044228cc51727d8f221e2626859
-  end register()
-  transaction mined in block number 3271616
-  offer_id: 28
-  ```
-
-- offer を有効化する方法
-
-  ```bash
-  intmax io activate 28 --network scroll
-  ```
-
-  実行結果
-
-  ```bash
-  start activate()
-  transaction hash is https://blockscout.scroll.io/tx/0xbe499b79a7bab1d9c2a4eeadacf752060c1a5bc3bc0ef9c266a6d60b4eb2b793
-  end activate()
-  transaction mined in block number 3271652
-  ```
-
-## WalletSDK
-
-- インストール
-
-  ```bash
-  yarn add intmax-walletsdk
-  ```
+ステートレスなロールアップ INTMAX を調査・学習するためのリポジトリです。
 
 ## WalletSDK 用のサンプルアプリ起動方法
+
+- リポジトリをクローンしてくる。
+
+  ```bash
+  git clone https://github.com/mashharuki/IntmaxRepo
+  ```
 
 - 事前準備
 
@@ -177,7 +20,7 @@ Intmax では、各 2500 ドルの賞品を 2 つ用意しています。また�
       - [ETHGlobal faucet](https://ethglobal.com/faucet)
       - [Scroll が紹介している faucet 用のサイト](https://docs.scroll.io/en/user-guide/faucet/)
 
-      以上にアクセスして Faucet を首都すること！！
+      以上にアクセスして Faucet を取得すること！！
 
   2.  ScrollScan の API を取得すること
 
@@ -185,13 +28,21 @@ Intmax では、各 2500 ドルの賞品を 2 つ用意しています。また�
 
       [ScrollScan API Key](https://scrollscan.com/myapikey)
 
+      ![](./docs/imgs/handson/1.png)
+
   3.  OpenZepplin Defender にログインして ScrollSepolia 上で Relayer を作成し、API キーを取得すること。
 
       [OpenZeppelin Defender Relayer](https://defender.openzeppelin.com/v2/#/manage/relayers)
 
-  4.  上記で作成した Relayer のウォレットアドレスに小学の ETH を送金する(Scroll Sepolia 上で送金してください！！)。
+      ![](./docs/imgs/handson/2.png)
+
+  4.  上記で作成した Relayer のウォレットアドレスに少額の ETH を送金する(Scroll Sepolia 上で送金してください！！)。
 
       [OpenZeppelin Defender で作成した Relayer アドレス - ScrollScan](https://sepolia.scrollscan.dev/address/0x1B38AB190EDf2bb4BcB2EC0b6639426731861581)
+
+      ![](./docs/imgs/handson/3.png)
+
+      各作成した Relayer のアドレスが表示されているはずなのでそのアドレスに入金すること
 
   5.  環境変数の設定
 
@@ -236,6 +87,12 @@ Intmax では、各 2500 ドルの賞品を 2 つ用意しています。また�
   yarn
   ```
 
+- スマートコントラクトのコンパイル
+
+  ```bash
+  yarn backend compile
+  ```
+
 - スマートコントラクト　デプロイ
 
   ```bash
@@ -278,7 +135,228 @@ Intmax では、各 2500 ドルの賞品を 2 つ用意しています。また�
   yarn fronend dev
   ```
 
+## ソースコードの解説(INTMAX Wallet SDK に関する部分)
+
+INTMAX Wallet SDK に関する実装は全て `pkgs/frontend/src/context/IntmaxProvider.tsx`にまとめてあります！！
+
+このファイルには次の機能を実装しています。
+
+1. SDK 用のインスタンスを生成するメソッド
+2. connect するメソッド
+3. トランザクションを送信するメソッド
+4. ガスレスでトランザクションを送信するメソッド
+
+5. の部分では`intmax-walletsdk/dapp`の`ethereumProvider`と`intmaxDappClient`を使って実装しています！！
+
+```ts
+/**
+ * SDK用のインスタンスを生成するメソッド
+ * @param walletUrl
+ * @returns
+ */
+const createSdk = () => {
+  setLoading(true);
+
+  try {
+    const client = intmaxDappClient({
+      wallet: {
+        url: DEFAULT_WALLET_URL,
+        name: "DEMO Wallet",
+        window: { mode: "iframe" }, // modeは iframeかpopupを選択できる
+      },
+      metadata: DAPP_METADATA,
+      providers: {
+        eip155: ethereumProvider({
+          httpRpcUrls: {
+            534351: RPC_URL, // 今回はScroll Sepoliaに接続するように設定
+          },
+        }),
+      },
+    });
+    // SDK インスタンスをセット
+    setSdk(client);
+    return client;
+  } catch (err: any) {
+    console.error("err:", err);
+  } finally {
+    setLoading(false);
+  }
+};
+```
+
+これで connect する準備ができました！！
+
+2. の部分については 1.で作成したインスタンスの機能を使って connect しています。  
+   ※ 今回は同時に`eth_sign`API も呼び出して署名も実施するようにしています！
+
+```ts
+const sdk = createSdk();
+
+const ethereum = sdk!.provider(`eip155:${CHAIN_ID}`);
+// ウォレット情報を取得する。
+await ethereum.request({ method: "eth_requestAccounts", params: [] });
+const accounts = (await ethereum.request({
+  method: "eth_accounts",
+  params: [],
+})) as string[];
+console.log("Account Info:", accounts);
+setAccounts(accounts);
+setAddress(accounts[0]);
+
+// ログイン時に署名
+const result = await ethereum.request({
+  method: "eth_sign",
+  params: [accounts[0], "Hello INTMAX WalletSDK Sample Dapp!!"],
+});
+console.log(result);
+```
+
+3. についても同様に 1.で作成したインスタンスの機能を使ってトランザクションを送信することになります。
+
+```ts
+/**
+ * トランザクションを送信するメソッド
+ */
+const sendTx = async (to: string, value: string) => {
+  const ethereum = await sdk.provider(`eip155:${CHAIN_ID}`);
+
+  setLoading(true);
+  try {
+    // send Simple Transaction
+    const result = await ethereum.request({
+      method: "eth_sendTransaction",
+      params: [
+        {
+          from: address,
+          to: to,
+          value: parseEther(value),
+        },
+      ],
+    });
+
+    console.log("tx info:", `https://sepolia.etherscan.io/tx/${result}`);
+
+    // .. 以下略
+  } catch (err: any) {
+    console.error("error:", err);
+    // .. 以下略
+  } finally {
+    // .. 以下略
+  }
+};
+```
+
+4.についてもこれまでとほぼ同じ流れです。ここでは、メタトランザクションで使う署名データ生成のために`eth_signTypedData_v4`の API を呼び出しています。
+
+残りの実装部分についてはメタトランザクションを実装する時のほぼ同じ流れです！！
+
+```ts
+/**
+ * ガスレスでコントラクトのメソッドを呼び出す
+ */
+const gasslessRequest = async () => {
+  console.log(
+    "================================= [gasless: START] ================================="
+  );
+
+  const ethereum = await sdk.provider(`eip155:${CHAIN_ID}`);
+  const provider = await new ethers.JsonRpcProvider(RPC_URL);
+
+  setLoading(true);
+  try {
+    // create forwarder contract instance
+    const forwarder: any = new Contract(
+      FORWARDER_CONTRACT_ADDRESS,
+      SampleForwarderJson.abi,
+      provider
+    ) as any;
+    // create ScoreValut contract instance
+    const helloWorld: any = new Contract(
+      HELLOWORLD_CONTRACT_ADDRESS,
+      HelloWorldJson.abi,
+      provider
+    ) as any;
+
+    // 呼び出すメソッドのエンコードデータを用意
+    // 今回は"hello INTMAXX!!"という文字列を引数にして HelloWorldコントラクトのsetNewTextメソッドを呼び出したいと思います！
+    const encodedData: any = helloWorld.interface.encodeFunctionData(
+      "setNewText",
+      ["hello INTMAXX!!"]
+    );
+
+    // get domain
+    const domain = await forwarder.eip712Domain();
+    // get unit48
+    const uint48Time = getUint48();
+
+    console.log("encodedData:", encodedData);
+    console.log("domain:", domain);
+    console.log("uint48Time:", uint48Time);
+
+    // test sign messages
+    const typedData = {
+      domain: {
+        name: domain[1],
+        version: domain[2],
+        chainId: CHAIN_ID, // scroll sepolia
+        verifyingContract: domain[4].toString(),
+      },
+      types: {
+        ForwardRequest: ForwardRequest,
+      },
+      primaryType: "ForwardRequest",
+      message: {
+        from: address.toString(),
+        to: HELLOWORLD_CONTRACT_ADDRESS.toString(),
+        value: 0,
+        gas: 360000,
+        nonce: (await forwarder.nonces(address)).toString(),
+        deadline: uint48Time.toString(),
+        data: encodedData.toString(),
+      },
+    };
+
+    // create request data
+    // eth_signTypedData_v4 のAPIを使って署名データを作成
+    const sig = await ethereum.request({
+      method: "eth_signTypedData_v4",
+      params: [address, JSON.stringify(typedData)],
+    });
+
+    console.log("sig:", sig);
+
+    // call requestRelayer API
+    const gaslessResult = await fetch("/api/requestRelayer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: address,
+        to: HELLOWORLD_CONTRACT_ADDRESS,
+        value: 0,
+        gas: 360000,
+        nonce: (await forwarder.nonces(address!)).toString(),
+        deadline: uint48Time.toString(),
+        data: encodedData,
+        signature: sig,
+      }),
+    });
+
+    console.log(await gaslessResult.json());
+
+    // .. 以下略
+  } catch (err: any) {
+    // .. 以下略
+  } finally {
+    // .. 以下略
+  }
+};
+```
+
 ### 参考文献
+
+以下参考にしたサイトや文献です！！
 
 1. [Scaling Ethereum 2023](https://ethglobal.com/events/scaling2023/prizes/intmax-intmax-5ejin)
 2. [GitHub - webmax.js Public](https://github.com/InternetMaximalism/webmax.js)
