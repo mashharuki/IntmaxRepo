@@ -154,6 +154,16 @@
 
   ![](./docs/imgs/handson/4.png)
 
+  初回時は Wallet がないので新規作成するかどうか聞かれる。
+
+  `Create new wallet`を選択して新しくウォレットを作成する。
+
+  ![](./docs/imgs/handson/0.0.png)
+
+  ニーモニックコードが表示されるので忘れないようにメモかダウンロードを行う。
+
+  ![](./docs/imgs/handson/0.1.png)
+
   ポップアップが表示されるので`Sign`ボタンを押す！
 
   ![](./docs/imgs/handson/5.png)

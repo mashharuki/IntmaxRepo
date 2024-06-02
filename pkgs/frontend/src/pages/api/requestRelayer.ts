@@ -74,7 +74,7 @@ export default async function handler(
     // call execute method from relayer
     const result2 = await forwarder.execute(request);
 
-    console.log(result2);
+    console.log("tx hash:", result2.hash);
 
     console.log(
       " ========================================= [RequestRaler: END] =============================================="
