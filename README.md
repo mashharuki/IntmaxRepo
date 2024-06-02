@@ -193,53 +193,6 @@
     signature: '0xbcd2f0729f165096002568c3c2a8523ac12892646a0f756dde69528b132261e6186825fb5ea2549048a1e5f3e46cb65e86b5248098d25e9287d4d9ec0e98a6e01c'
   }
   true
-  ContractTransactionResponse {
-    provider: DefenderRelayProvider {
-      _isProvider: true,
-      _events: [],
-      _emitted: { block: -2 },
-      disableCcipRead: false,
-      formatter: Formatter { formats: [Object] },
-      anyNetwork: false,
-      _networkPromise: Promise { [Object] },
-      _maxInternalBlockNumber: -1024,
-      _lastBlockNumber: -2,
-      _maxFilterBlockRange: 10,
-      _pollingInterval: 4000,
-      _fastQueryDate: 0,
-      connection: { url: 'https://api.defender.openzeppelin.com/' },
-      _nextId: 42,
-      credentials: {
-        apiKey: '2qUXLXu3Jzsykrn23R7QL1LBvF2BpZQT',
-        apiSecret: '3kSDBbFurB48YXRp83n6EVxzy8vN64P9d4BNUYbpytLNGEpwDBnLsER1oEwjXNuv'
-      },
-      relayer: Relayer { relayer: [ApiRelayer] },
-      _network: { chainId: 534351, name: 'unknown' }
-    },
-    blockNumber: null,
-    blockHash: null,
-    index: undefined,
-    hash: '0xee52b5a1755695fdf0b2423c17f4aaa6d8f7029bbd88b0d9eaebc03f987faa99',
-    type: undefined,
-    to: '0xbfDe6e57dD7f54D496B896f6c7d551eE40d3BEB0',
-    from: '0x1b38ab190edf2bb4bcb2ec0b6639426731861581',
-    nonce: 77,
-    gasLimit: BigNumber { _hex: '0xe08e', _isBigNumber: true },
-    gasPrice: BigNumber { _hex: '0x012a05f200', _isBigNumber: true },
-    maxPriorityFeePerGas: null,
-    maxFeePerGas: null,
-    maxFeePerBlobGas: null,
-    data: '0xdf905caf00000000000000000000000000000000000000000000000000000000000000200000000000000000000000008f828fb8fe67345fa672c84f1aed26be722486d8000000000000000000000000ebdef95c2f60d070bd5f10e9d69f55943169a10800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000057e4000000000000000000000000000000000000000000000000000000000665b264b00000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000018000000000000000000000000000000000000000000000000000000000000000642742d0f60000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000f68656c6c6f20494e544d41585821210000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000041bcd2f0729f165096002568c3c2a8523ac12892646a0f756dde69528b132261e6186825fb5ea2549048a1e5f3e46cb65e86b5248098d25e9287d4d9ec0e98a6e01c00000000000000000000000000000000000000000000000000000000000000',
-    value: BigNumber { _hex: '0x00', _isBigNumber: true },
-    chainId: 534351,
-    signature: {
-      r: '0x90005745431353f4ea2a51cda382b168d1b5867b2905feb0a74eb76f28529c21',
-      s: '0x6012a792fb7e7b211525991f26b4bfc8919d2864cf6cebca9f7558e43074c8f0',
-      v: '0x104ec2'
-    },
-    accessList: null,
-    blobVersionedHashes: null
-  }
   ========================================= [RequestRaler: END] ==============================================
   ```
 
@@ -476,6 +429,8 @@ const gasslessRequest = async () => {
 
 以下参考にしたサイトや文献です！！
 
+他の ZK ロールアップのことも学べそうな参考リンクも貼り付けています。
+
 1. [Scaling Ethereum 2023](https://ethglobal.com/events/scaling2023/prizes/intmax-intmax-5ejin)
 2. [GitHub - webmax.js Public](https://github.com/InternetMaximalism/webmax.js)
 3. [Intmax Wallet](https://drive.google.com/file/d/16AcEheRMEtX9GgjOcQiFQZNQR8ZCPAS0/view)
@@ -497,3 +452,11 @@ const gasslessRequest = async () => {
 19. [大衆向けイーサリアムのスケーリング: INTMAX が Plasma Next を発表](https://hackernoon.com/ja/%E5%A4%A7%E8%A1%86%E5%90%91%E3%81%91%E3%82%A4%E3%83%BC%E3%82%B5%E3%83%AA%E3%82%A2%E3%83%A0%E3%81%AE%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%AA%E3%83%B3%E3%82%B0-intmax-%E3%81%8C%E6%AC%A1%E3%81%AB%E3%83%97%E3%83%A9%E3%82%BA%E3%83%9E%E3%82%92%E7%99%BA%E8%A1%A8)
 20. [INTMAX ホワイトペーパー](https://eprint.iacr.org/2023/1082.pdf)
 21. [Plasma Next: Plasma without Online Requirements](https://hackmd.io/@leonahioki/SJQixupj6)
+22. [Youtube - INTMAX のステートレスなロールアップが他の ZK ロールアップと何が違うのが概要だけ解説してくれている動画](https://youtu.be/RFoK4WL6mZo?si=ogZX8o4EVUT2MgDW)
+23. [【完全保存版】zkEVM とは何か](https://zenn.dev/thirdweb_jp/articles/1ff655d56a1120)
+24. [初心者向け: #zkEVM とは？](https://note.com/0xpolygon_japan/n/n892efeec12c5)
+25. [いま話題の「zkEVM」とは何か？～農業への応用を考察～](https://note.com/noujoujin/n/nc57bda20b4ba)
+26. [イーサリアム開発者ドキュメント - プラズマチェーンとは何か？](https://ethereum.org/ja/developers/docs/scaling/plasma/)
+27. [レイヤー 2 技術の Plasma は、提案から 2 年を経て実用段階に近づく＝ BlockChainJam 2019](https://crypto.watch.impress.co.jp/docs/event/1220922.html)
+28. [ヴィタリック、スケーリングソリューション「Plasma」の評価を再検討すべきと主張](https://www.neweconomy.jp/posts/353238)
+29. [GitHub - Plasma ホワイトペーパー日本語訳](https://github.com/mashharuki/plasma-whitepaper-jp)

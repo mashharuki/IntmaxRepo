@@ -245,4 +245,16 @@ L1 アカウントの所有者がロールアップ内の残高を L1 に引き�
 
 Plasma Next について日本語で簡単に説明すると、 Intmax には各トランザクションに対して、５バイトのオンチェーン データしかなく、その５バイトに数千のトランザクションを含めることができます。Plasma Next の payment channel は、その 5 バイトを多くの送信者と共有できます。だから言葉通り「ほぼゼロ」のガスコストが Ethereum 上で実現できるんです。そして、なんと Plasma Next の payment channel には online requirements が必要ありません！この点は Lightning Network に詳しい人こそ、注目して下さり、反応やコメントを頂きました。
 
-> > > > > > > d977ebc (説明を追記)
+## 動画からわかったこと
+
+INTMAX の場合はユーザー側(クライアント側でも ZKproof を生成するようにしている。)  
+レイヤー 1 の方にデータを保持させない(ステートフルにさせない設計にしている。)
+
+INTMAX の ZKP は、**infinite recursive zkp**
+
+一個前の Proof を検証することで、帰納的に全ての ZKP のチェーンを検証可能。
+
+Client Side Validation に使うことで、Stateless の力を最大化
+
+⇨ 無制限の並列化が可能になる。
+⇨ 他にこの考え方を取り入れているのが Mina Protocol
