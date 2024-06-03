@@ -23,6 +23,26 @@ export default function Home() {
     await intmaxContext.connect();
   };
 
+  /**
+   * シンプルなトランザクションを送信するメソッド
+   */
+  const sendTx = async () => {
+    // ここで送信先と送金額を指定する。
+    // TODO なんかファウセット機能とかあると良さそう・・
+    await intmaxContext.sendTx(
+      "0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072",
+      "0.0001"
+    );
+  };
+
+  /**
+   * メタトランザクションでスマートコントラクトの機能を呼び出すメソッド
+   */
+  const gasslessRequest = async () => {
+    // ガスレストランザクションを実行
+    await intmaxContext.gasslessRequest();
+  };
+
   return (
     <>
       <Header />
@@ -38,27 +58,11 @@ export default function Home() {
                 <h3>{displayAddress(intmaxContext.address)}</h3>
                 <h3>Your Balance</h3>
                 <h3>{intmaxContext.balance} ETH</h3>
-                <button
-                  onClick={async () => {
-                    // ここで送信先と送金額を指定する。
-                    // TODO なんかファウセット機能とかあると良さそう・・
-                    await intmaxContext.sendTx(
-                      "0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072",
-                      "0.0001"
-                    );
-                  }}
-                  className={styles.authButton}
-                >
+                <button onClick={sendTx} className={styles.authButton}>
                   Send Sample Tx
                 </button>
                 <br />
-                <button
-                  onClick={async () => {
-                    // ガスレストランザクションを実行
-                    await intmaxContext.gasslessRequest();
-                  }}
-                  className={styles.authButton}
-                >
+                <button onClick={gasslessRequest} className={styles.authButton}>
                   Send GasslessRequest
                 </button>
               </>
