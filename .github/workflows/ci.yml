@@ -17,11 +17,19 @@ jobs:
         with:
           node-version: 20
 
+      - name: Cache yarn dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
       - name: Install dependencies
         run: yarn install
 
       - name: Build
-        run: yarn build
+        run: yarn frontend build
         env:
           NEXT_PUBLIC_APP_ICON: ${{ secrets.NEXT_PUBLIC_APP_ICON }}
           NEXT_PUBLIC_WALLET_URL: ${{ secrets.NEXT_PUBLIC_WALLET_URL }}
@@ -33,4 +41,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out
+          publish_dir: ./pkgs/frontend/.next
