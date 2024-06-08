@@ -11,6 +11,7 @@ permissions:
   contents: write
 
 jobs:
+  # セットアップジョブ
   setup:
     runs-on: ubuntu-latest
     steps:
@@ -37,6 +38,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+  # スマートコントラクトをテストするジョブ
   test-smartcontract:
     runs-on: ubuntu-latest
     needs: setup
@@ -67,6 +69,7 @@ jobs:
       - name: Test Smart Contract
         run: yarn backend test
 
+  # ビルドしてGitHub Pagesにデプロイするジョブ
   build-to-deploy:
     runs-on: ubuntu-latest
     needs: setup
@@ -107,8 +110,7 @@ jobs:
         run: yarn frontend export
 
       # しかしGitHub Pagesの仕様として_から始まるディレクトリが見えず404となる
-      # つまりHTMLからJSを読み込めない
-      # これを回避するために.nojekyllファイルをoutディレクトリに作る
+      # つまりHTMLからJSを読み込めなくなるので、これを回避するために.nojekyllファイルをoutディレクトリに作る
       - name: add nojekyll
         run: touch ./pkgs/frontend/out/.nojekyll
 

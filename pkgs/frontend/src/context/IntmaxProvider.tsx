@@ -271,7 +271,7 @@ export const IntmaxProvider = ({
       console.log("sig:", sig);
 
       // call requestRelayer API
-      const gaslessResult = await fetch("/api/requestRelayer", {
+      const gaslessResult = await fetch("IntmaxRepo/api/requestRelayer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

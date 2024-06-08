@@ -152,6 +152,8 @@
   yarn fronend dev
   ```
 
+  [http://localhost:3000/IntmaxRepo](http://localhost:3000/IntmaxRepo)にアクセスします！！
+
   以下のような画面が立ち上がるので`Let's Login`ボタンを押す！
 
   ![](./docs/imgs/handson/4.png)
