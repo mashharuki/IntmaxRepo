@@ -2,7 +2,8 @@
 
 ステートレスなロールアップ INTMAX を調査・学習するためのリポジトリです。
 
-[![Build and Deploy to GitHub Pages](https://github.com/mashharuki/IntmaxRepo/actions/workflows/ci.yml/badge.svg)](https://github.com/mashharuki/IntmaxRepo/actions/workflows/ci.yml)
+[![Build and Test on GitHub Actions](https://github.com/mashharuki/IntmaxRepo/actions/workflows/ci.yml/badge.svg)](https://github.com/mashharuki/IntmaxRepo/actions/workflows/ci.yml)  
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c2b5f699-06a7-4cc2-ba6e-4f314f3a93c7/deploy-status)](https://app.netlify.com/sites/intmaxwalletrepo/deploys)
 
 ## INTMAX Wallet SDK 用のサンプルアプリ起動方法
 
