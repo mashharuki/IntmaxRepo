@@ -2,6 +2,8 @@
 
 ステートレスなロールアップ INTMAX を調査・学習するためのリポジトリです。
 
+[![Build and Deploy to GitHub Pages](https://github.com/mashharuki/IntmaxRepo/actions/workflows/ci.yml/badge.svg)](https://github.com/mashharuki/IntmaxRepo/actions/workflows/ci.yml)
+
 ## INTMAX Wallet SDK 用のサンプルアプリ起動方法
 
 - リポジトリをクローンしてくる。

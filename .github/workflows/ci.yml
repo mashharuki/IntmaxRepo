@@ -67,9 +67,12 @@ jobs:
       - name: Test Smart Contract
         run: yarn backend test
 
-  build:
+  build-to-deploy:
     runs-on: ubuntu-latest
     needs: setup
+    environment:
+      name: github-pages-url
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -110,17 +113,9 @@ jobs:
           path: ./pkgs/frontend/.next
           retention-days: 5
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: github-pages-url
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: List Artifact Contents
-        run: ls -R
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          name: github-pages
+          path: ./pkgs/frontend/.next
