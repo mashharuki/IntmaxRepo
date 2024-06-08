@@ -1,6 +1,7 @@
 import HelloWorldJson from "@/contracts/HelloWorld.sol/HelloWorld.json";
 import SampleForwarderJson from "@/contracts/SampleForwarder.sol/SampleForwarder.json";
 import {
+  BLOCK_EXPLORER_URL,
   CHAIN_ID,
   DAPP_METADATA,
   DEFAULT_WALLET_URL,
@@ -154,7 +155,7 @@ export const IntmaxProvider = ({
         params: [{ from: address, to: to, value: parseEther(value) }],
       });
 
-      console.log("tx info:", `https://sepolia.etherscan.io/tx/${result}`);
+      console.log("tx info:", `${BLOCK_EXPLORER_URL}/tx/${result}`);
 
       // ブロックを取得する
       const currentBlockNubmer = await ethereum.request({
@@ -270,8 +271,17 @@ export const IntmaxProvider = ({
 
       console.log("sig:", sig);
 
+      // ローカルかGitHubPagesかでパスが変わるのでここで制御
+      let apiUrl: string;
+
+      if (process.env.NODE_ENV === "production") {
+        apiUrl = "api/requestRelayer";
+      } else {
+        apiUrl = "IntmaxRepo/api/requestRelayer";
+      }
+
       // call requestRelayer API
-      const gaslessResult = await fetch("IntmaxRepo/api/requestRelayer", {
+      const gaslessResult = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -3,6 +3,7 @@ import Loading from "@/components/Loading";
 import Toaster from "@/components/Toaster";
 import { IntmaxContext } from "@/context/IntmaxProvider";
 import styles from "@/styles/Home.module.css";
+import { BLOCK_EXPLORER_URL } from "@/utils/constants";
 import { displayAddress } from "@/utils/functions";
 import { useContext } from "react";
 import "react-toastify/dist/ReactToastify.css";
@@ -55,7 +56,15 @@ export default function Home() {
             {intmaxContext.address ? (
               <>
                 <h3>Your Address</h3>
-                <h3>{displayAddress(intmaxContext.address)}</h3>
+                <h3>
+                  <a
+                    className="underline"
+                    href={`${BLOCK_EXPLORER_URL}/address/${intmaxContext.address}`}
+                    target="_blank"
+                  >
+                    {displayAddress(intmaxContext.address)}
+                  </a>
+                </h3>
                 <h3>Your Balance</h3>
                 <h3>{intmaxContext.balance} ETH</h3>
                 <button onClick={sendTx} className={styles.authButton}>

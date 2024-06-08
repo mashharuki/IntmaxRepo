@@ -105,6 +105,7 @@ jobs:
           NEXT_PUBLIC_RPC_URL: ${{ secrets.NEXT_PUBLIC_RPC_URL }}
           DEFENDER_API_KEY: ${{ secrets.DEFENDER_API_KEY }}
           DEFENDER_SECRET_KEY: ${{ secrets.DEFENDER_SECRET_KEY }}
+          NODE_ENV: ${{ secrets.NODE_ENV }}
 
       - name: Export Pages Artifact
         run: yarn frontend export
