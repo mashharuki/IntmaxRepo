@@ -109,6 +109,12 @@ jobs:
       - name: Export Pages Artifact
         run: yarn frontend export
 
+      # しかしGitHub Pagesの仕様として_から始まるディレクトリが見えず404となる
+      # つまりHTMLからJSを読み込めない
+      # これを回避するために.nojekyllファイルをoutディレクトリに作る
+      - name: add nojekyll
+        run: touch ./pkgs/frontend/out/.nojekyll
+
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
