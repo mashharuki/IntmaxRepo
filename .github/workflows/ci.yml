@@ -5,7 +5,7 @@ on:
     branches:
       - main
 
- permissions:
+permissions:
   pages: write
   id-token: write
 
