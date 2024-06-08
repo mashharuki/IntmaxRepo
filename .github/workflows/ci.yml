@@ -55,7 +55,7 @@ jobs:
     needs: build
     steps:
       - uses: actions/github-pages@v3
-        environment:
+        env:
           name: github-pages
           url: ${{ steps.deployment.outputs.page_url }}
       - name: Deploy to GitHub Pages
