@@ -152,7 +152,7 @@
   yarn fronend dev
   ```
 
-  [http://localhost:3000/IntmaxRepo](http://localhost:3000/IntmaxRepo)にアクセスします！！
+  [http://localhost:3000](http://localhost:3000)にアクセスします！！
 
   以下のような画面が立ち上がるので`Let's Login`ボタンを押す！
 

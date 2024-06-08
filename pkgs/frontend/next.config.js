@@ -26,8 +26,8 @@ const nextConfig = withPWA({
       "bafkreidkyzvx746bw6465ky6wwmb23lbwqp6qbyeoosfdbi4osdkemtqle.ipfs.w3s.link",
     ],
   },
-  basePath: "/IntmaxRepo",
-  assetPrefix: "/IntmaxRepo/",
+  // basePath: "/IntmaxRepo",
+  // assetPrefix: "/IntmaxRepo/",
 });
 
 module.exports = nextConfig;

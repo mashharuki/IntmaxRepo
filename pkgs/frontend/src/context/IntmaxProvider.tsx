@@ -271,17 +271,8 @@ export const IntmaxProvider = ({
 
       console.log("sig:", sig);
 
-      // ローカルかGitHubPagesかでパスが変わるのでここで制御
-      let apiUrl: string;
-
-      if (process.env.NODE_ENV === "production") {
-        apiUrl = "api/requestRelayer";
-      } else {
-        apiUrl = "IntmaxRepo/api/requestRelayer";
-      }
-
       // call requestRelayer API
-      const gaslessResult = await fetch(apiUrl, {
+      const gaslessResult = await fetch("api/requestRelayer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
