@@ -106,11 +106,14 @@ jobs:
           DEFENDER_API_KEY: ${{ secrets.DEFENDER_API_KEY }}
           DEFENDER_SECRET_KEY: ${{ secrets.DEFENDER_SECRET_KEY }}
 
+      - name: Export Pages Artifact
+        run: yarn frontend export
+
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
-          path: ./pkgs/frontend/.next
+          path: ./pkgs/frontend/.out
           retention-days: 5
 
       - name: Deploy to GitHub Pages
@@ -118,4 +121,4 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           name: github-pages
-          path: ./pkgs/frontend/.next
+          path: ./pkgs/frontend/.out
