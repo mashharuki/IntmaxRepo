@@ -121,4 +121,4 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           name: github-pages
-          path: ./pkgs/frontend/.out
+          path: ./pkgs/frontend/out
