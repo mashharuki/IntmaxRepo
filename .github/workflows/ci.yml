@@ -113,7 +113,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
-          path: ./pkgs/frontend/.out
+          path: ./pkgs/frontend/out
           retention-days: 5
 
       - name: Deploy to GitHub Pages
