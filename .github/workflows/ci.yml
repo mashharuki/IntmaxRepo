@@ -1,4 +1,4 @@
-name: Build and Deploy to GitHub Pages
+name: Build and Test on GitHub Actions
 
 on:
   push:
@@ -65,7 +65,7 @@ jobs:
 
       - name: Install dependencies
         run: yarn install
-
+      # テストコマンドを実行
       - name: Test Smart Contract
         run: yarn backend test
 
@@ -96,7 +96,7 @@ jobs:
 
       - name: Install dependencies
         run: yarn install
-
+      # ビルドコマンドを実行
       - name: Build
         run: yarn frontend build
         env:
@@ -121,7 +121,7 @@ jobs:
           name: github-pages
           path: ./pkgs/frontend/out
           retention-days: 5
-
+      # デプロイ自体はうまく行くもののアプリの挙動がおかしいので一旦はNetlifyにデプロイした方が良い。
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

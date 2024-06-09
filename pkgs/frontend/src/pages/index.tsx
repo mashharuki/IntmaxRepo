@@ -67,9 +67,11 @@ export default function Home() {
                 </h3>
                 <h3>Your Balance</h3>
                 <h3>{intmaxContext.balance} ETH</h3>
+                {/*
                 <button onClick={sendTx} className={styles.authButton}>
                   Send Sample Tx
                 </button>
+                */}
                 <br />
                 <button onClick={gasslessRequest} className={styles.authButton}>
                   Send GasslessRequest
