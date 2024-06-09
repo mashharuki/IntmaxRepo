@@ -486,3 +486,4 @@ const gasslessRequest = async () => {
 27. [レイヤー 2 技術の Plasma は、提案から 2 年を経て実用段階に近づく＝ BlockChainJam 2019](https://crypto.watch.impress.co.jp/docs/event/1220922.html)
 28. [ヴィタリック、スケーリングソリューション「Plasma」の評価を再検討すべきと主張](https://www.neweconomy.jp/posts/353238)
 29. [GitHub - Plasma ホワイトペーパー日本語訳](https://github.com/mashharuki/plasma-whitepaper-jp)
+30. [Medium - Recursive Zero-Knowledge Proofs](https://scryptplatform.medium.com/recursive-zero-knowledge-proofs-27f2d934f953)
