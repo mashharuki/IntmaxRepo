@@ -1,6 +1,6 @@
 # IntmaxRepo
 
-ステートレスなロールアップ INTMAX を調査・学習するためのリポジトリです。
+ステートレスなロールアップ INTMAX および INTMAX Wallet を調査・学習するためのリポジトリです。
 
 [![Build and Test on GitHub Actions](https://github.com/mashharuki/IntmaxRepo/actions/workflows/ci.yml/badge.svg)](https://github.com/mashharuki/IntmaxRepo/actions/workflows/ci.yml)  
 [![Netlify Status](https://api.netlify.com/api/v1/badges/c2b5f699-06a7-4cc2-ba6e-4f314f3a93c7/deploy-status)](https://app.netlify.com/sites/intmaxwalletrepo/deploys)
@@ -96,6 +96,12 @@
   yarn backend compile
   ```
 
+- スマートコントラクトのテスト
+
+  ```bash
+  yarn backend test
+  ```
+
 - スマートコントラクト　デプロイ
 
   ```bash
@@ -114,20 +120,21 @@
 
 - フロントエンドの定数ファイルの値を更新する。
 
-  `pkgs/frontend/src/utils/constants.ts`でコントラクトのアドレスを設定しているので、上記でデプロイしたコントラクトのアドレスに更新します。
+  `pkgs/frontend/src/utils/constants.ts`でコントラクトのアドレスを設定しているので、上記でデプロイしたコントラクトのアドレスに更新します。  
+  ※ デプロイがうまく行かないようであれば、すでに貼り付けてある値をそのまま使用してください。
 
   ```ts
   export const FORWARDER_CONTRACT_ADDRESS =　<デプロイしたアドレス>;
   export const HELLOWORLD_CONTRACT_ADDRESS = <デプロイしたアドレス>;
   ```
 
-- 検証(オプション)
+- コントラクトを Verify する **(オプション)**
 
   ```bash
   yarn backend verify --network scrollSepolia
   ```
 
-- ガスレスでサンプルコントラクトの機能を呼び出す(オプション)
+- ガスレスでサンプルコントラクトの機能を呼び出す **(オプション)**
 
   ```bash
   yarn backend gaslessSetNewText --network scrollSepolia
@@ -135,19 +142,19 @@
 
 - コントラクトに保存されている Text の値を取得する。
 
-  初期値は、空文字です。
+  初期値は、空文字になっているはず
 
   ```bash
   yarn backend getText --network scrollSepolia
   ```
 
-- フロントエンドビルド
+- フロントエンドをビルドする
 
   ```bash
   yarn frontend build
   ```
 
-- フロントエンド起動
+- フロントエンドを起動する
 
   ```bash
   yarn fronend dev
@@ -196,24 +203,28 @@
   トランザクションデータが出力されていれば OK!!
 
   ```bash
-   ========================================= [RequestRaler: START] ==============================================
+  ========================================= [RequestRaler: START] ==============================================
   request: {
-    from: '0x8f828fb8FE67345Fa672C84F1aed26Be722486d8',
+    from: '0xbFc39B0230D743C8F7FAb716E622C1FD2894B148',
     to: '0xEbdef95c2f60D070bD5f10E9D69F55943169A108',
     value: 0n,
     gas: 360000n,
     nonce: 5n,
-    deadline: 1717249611n,
+    deadline: 1717898498n,
     data: '0x2742d0f60000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000f68656c6c6f20494e544d41585821210000000000000000000000000000000000',
-    signature: '0xbcd2f0729f165096002568c3c2a8523ac12892646a0f756dde69528b132261e6186825fb5ea2549048a1e5f3e46cb65e86b5248098d25e9287d4d9ec0e98a6e01c'
+    signature: '0xd13fbf2b821d44c80dee699982183a47b34eb2b2fa29cb179478e41cc4f8dcce041bdd1e0106a1476d7843ea9f79418ee9e3db16273fa098bbfa305f84ba905e1c'
   }
   true
+  tx hash: 0x95d24a93afeb154397b92f672fb500d6db52c80ee4ea9e4f13bcc67f66fe6c75
   ========================================= [RequestRaler: END] ==============================================
   ```
 
+  こんな感じのログが出ていればガスレストランザクション発行できています！！
+
 - もう一回コントラクトに保存されている Text の値を取得する。
 
-  更新されているはず！！
+  初期値は空文字だったが、`hello INTMAXX!!`という文言が取得できるはず！！  
+  ※ 更新されていない場合は時間をおいて再度実行してみてください。
 
   ```bash
   yarn backend getText --network scrollSepolia
