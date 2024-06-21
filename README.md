@@ -5,6 +5,10 @@
 [![Build and Test on GitHub Actions](https://github.com/mashharuki/IntmaxRepo/actions/workflows/ci.yml/badge.svg)](https://github.com/mashharuki/IntmaxRepo/actions/workflows/ci.yml)  
 [![Netlify Status](https://api.netlify.com/api/v1/badges/c2b5f699-06a7-4cc2-ba6e-4f314f3a93c7/deploy-status)](https://app.netlify.com/sites/intmaxwalletrepo/deploys)
 
+## 注意事項
+
+node のバージョンは、`18.18.0 ` 以上であることが必要です！
+
 ## INTMAX Wallet SDK 用のサンプルアプリ起動方法
 
 - リポジトリをクローンしてくる。
@@ -17,13 +21,13 @@
 
   1.  Scroll Sepolia の faucet を取得すること
 
-      以下サイトで取得できます。
+      例えば以下のサイトで取得できます。
 
-      - [learnweb3 Faucet](https://learnweb3.io/faucets/)
+      - [Covalent faucet](https://www.covalenthq.com/faucet/)
       - [ETHGlobal faucet](https://ethglobal.com/faucet)
       - [Scroll が紹介している faucet 用のサイト](https://docs.scroll.io/en/user-guide/faucet/)
 
-      以上にアクセスして Faucet を取得すること！！
+      Scroll Sepolia の faucet が取得できればどのサイトでも良いのでそこにアクセスして Faucet を取得すること！！
 
   2.  ScrollScan の API を取得すること
 
@@ -140,9 +144,32 @@
   yarn backend gaslessSetNewText --network scrollSepolia
   ```
 
+  `/pkgs/backend/scripts/relay/gaslessSetScore.ts`ファイルの内容を実行します！！
+
+  `OZ Defender`の機能を使ってリレイヤーからトランザクション実行させてます！！
+
+  ```ts
+  /**
+   * レイヤー用のSignerオブジェクトを作成するメソッド
+   */
+  const getRelayer = async () => {
+    const credentials: any = {
+      apiKey: DEFENDER_API_KEY,
+      apiSecret: DEFENDER_SECRET_KEY,
+    };
+
+    const ozProvider = new DefenderRelayProvider(credentials);
+    const ozSigner = new DefenderRelaySigner(credentials, ozProvider, {
+      speed: "fast",
+    });
+
+    return ozSigner;
+  };
+  ```
+
 - コントラクトに保存されている Text の値を取得する。
 
-  初期値は、空文字になっているはず
+  初期値は、`newText`になっているはず
 
   ```bash
   yarn backend getText --network scrollSepolia
@@ -157,7 +184,7 @@
 - フロントエンドを起動する
 
   ```bash
-  yarn fronend dev
+  yarn frontend dev
   ```
 
   [http://localhost:3000](http://localhost:3000)にアクセスします！！
