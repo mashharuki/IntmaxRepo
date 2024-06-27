@@ -514,3 +514,4 @@ const gasslessRequest = async () => {
 28. [ヴィタリック、スケーリングソリューション「Plasma」の評価を再検討すべきと主張](https://www.neweconomy.jp/posts/353238)
 29. [GitHub - Plasma ホワイトペーパー日本語訳](https://github.com/mashharuki/plasma-whitepaper-jp)
 30. [Medium - Recursive Zero-Knowledge Proofs](https://scryptplatform.medium.com/recursive-zero-knowledge-proofs-27f2d934f953)
+31. [Intmax Wallet SDKのサンプル実装例を取り上げたブログ記事](https://medium.com/@intmaxafrica/how-to-integrate-intmax-wallet-into-your-dapp-using-rainbowkit-b363eb9c6fce)
