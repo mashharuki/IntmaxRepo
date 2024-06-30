@@ -2,12 +2,12 @@
 
 ステートレスなロールアップ INTMAX および INTMAX Wallet を調査・学習するためのリポジトリです。
 
-[![Build and Test on GitHub Actions](https://github.com/mashharuki/IntmaxRepo/actions/workflows/ci.yml/badge.svg)](https://github.com/mashharuki/IntmaxRepo/actions/workflows/ci.yml)  
+[![Build and Test on GitHub Actions](https://github.com/mashharuki/IntmaxRepo/actions/workflows/ci.yml/badge.svg)](https://github.com/mashharuki/IntmaxRepo/actions/workflows/ci.yml)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/c2b5f699-06a7-4cc2-ba6e-4f314f3a93c7/deploy-status)](https://app.netlify.com/sites/intmaxwalletrepo/deploys)
 
 ## 注意事項
 
-node のバージョンは、`18.18.0 ` 以上であることが必要です！
+node のバージョンは、`18.18.0` 以上であることが必要です！
 
 ## INTMAX Wallet SDK 用のサンプルアプリ起動方法
 
@@ -23,9 +23,12 @@ node のバージョンは、`18.18.0 ` 以上であることが必要です！
 
       例えば以下のサイトで取得できます。
 
-      - [Covalent faucet](https://www.covalenthq.com/faucet/)
-      - [ETHGlobal faucet](https://ethglobal.com/faucet)
-      - [Scroll が紹介している faucet 用のサイト](https://docs.scroll.io/en/user-guide/faucet/)
+      - **Covalent faucet**
+        - [https://www.covalenthq.com/faucet/](https://www.covalenthq.com/faucet/)
+      - **ETHGlobal faucet**
+        - [https://ethglobal.com/faucet](https://ethglobal.com/faucet)
+      - **Scroll が紹介している faucet 用のサイト**
+        - [https://docs.scroll.io/en/user-guide/faucet/](https://docs.scroll.io/en/user-guide/faucet/)
 
       Scroll Sepolia の faucet が取得できればどのサイトでも良いのでそこにアクセスして Faucet を取得すること！！
 
@@ -33,31 +36,43 @@ node のバージョンは、`18.18.0 ` 以上であることが必要です！
 
       デプロイしたコントラクトを Verify するのに使うので以下サイトにアクセスして API キーを作成する。
 
-      [ScrollScan API Key](https://scrollscan.com/myapikey)
+      **ScrollScan API Key**
+      - [https://scrollscan.com/myapikey](https://scrollscan.com/myapikey)
 
       ![](./docs/imgs/handson/1.png)
 
   3.  OpenZepplin Defender にログインして ScrollSepolia 上で Relayer を作成し、API キーを取得すること。
 
-      [OpenZeppelin Defender Relayer](https://defender.openzeppelin.com/v2/#/manage/relayers)
+      **OpenZeppelin Defender Relayer**
+      - [https://defender.openzeppelin.com/v2/#/manage/relayers](https://defender.openzeppelin.com/v2/#/manage/relayers)
 
       ![](./docs/imgs/handson/2.png)
 
-  4.  上記で作成した Relayer のウォレットアドレスに少額の ETH を送金する(Scroll Sepolia 上で送金してください！！)。
+      ＊後ほど環境変数に使用するため以下の情報をコピペしておく。
+      ![](./docs/imgs/handson/defender_api.png)
 
-      [OpenZeppelin Defender で作成した Relayer アドレス - ScrollScan](https://sepolia.scrollscan.dev/address/0x1B38AB190EDf2bb4BcB2EC0b6639426731861581)
+  4.  上記で作成した Relayer のウォレットアドレスに少額の ETH （0.5 Sepolia ETHくらい）を送金する(Scroll Sepolia 上で送金してください！！)。
+
+      ****OpenZeppelin** Defender で作成した Relayer アドレス - ScrollScan**
+      - [https://sepolia.scrollscan.dev/address/0x1B38AB190EDf2bb4BcB2EC0b6639426731861581](https://sepolia.scrollscan.dev/address/0x1B38AB190EDf2bb4BcB2EC0b6639426731861581)
 
       ![](./docs/imgs/handson/3.png)
 
       各作成した Relayer のアドレスが表示されているはずなのでそのアドレスに入金すること
 
-  5.  環境変数の設定
+  5. コントラクトのデプロイに使用するウォレットアドレスにも少額の　ETH （0.5 Sepolia ETHくらい）を送金する(Scroll Sepolia 上で送金してください！！)。
+
+  6.  環境変数の設定
 
       環境変数は`backend`と`frontend`でそれぞれ設定する。
 
       - backend 側の環境変数の設定
 
         `.env`ファイルを`backend`フォルダ配下に作成する。
+
+        ```bash
+        cp pkgs/backend/.env.example pkgs/backend/.env
+        ```
 
         そして以下の環境変数を設定する。
 
@@ -76,14 +91,18 @@ node のバージョンは、`18.18.0 ` 以上であることが必要です！
 
         `.env.local`ファイルを`frontend`フォルダ配下に作成する。
 
+        ```bash
+        cp pkgs/frontend/.env.local.example pkgs/frontend/.env.local
+        ```
+
         そして以下の環境変数を設定する。
 
         ```txt
-          NEXT_PUBLIC_APP_ICON="https://intmaxwallet-sdk-wallet.vercel.app/vite.svg"
-          NEXT_PUBLIC_WALLET_URL="https://intmaxwallet-sdk-wallet.vercel.app/"
-          NEXT_PUBLIC_RPC_URL="https://sepolia-rpc.scroll.io/"
-          DEFENDER_API_KEY=
-          DEFENDER_SECRET_KEY=
+        NEXT_PUBLIC_APP_ICON="https://intmaxwallet-sdk-wallet.vercel.app/vite.svg"
+        NEXT_PUBLIC_WALLET_URL="https://intmaxwallet-sdk-wallet.vercel.app/"
+        NEXT_PUBLIC_RPC_URL="https://sepolia-rpc.scroll.io/"
+        DEFENDER_API_KEY=
+        DEFENDER_SECRET_KEY=
         ```
 
         `DEFENDER_API_KEY`と`DEFENDER_SECRET_KEY`は上記で取得してきたものを貼り付ける。
@@ -124,7 +143,7 @@ node のバージョンは、`18.18.0 ` 以上であることが必要です！
 
 - フロントエンドの定数ファイルの値を更新する。
 
-  `pkgs/frontend/src/utils/constants.ts`でコントラクトのアドレスを設定しているので、上記でデプロイしたコントラクトのアドレスに更新します。  
+  `pkgs/frontend/src/utils/constants.ts`でコントラクトのアドレスを設定しているので、上記でデプロイしたコントラクトのアドレスに更新します。
   ※ デプロイがうまく行かないようであれば、すでに貼り付けてある値をそのまま使用してください。
 
   ```ts
@@ -203,6 +222,10 @@ node のバージョンは、`18.18.0 ` 以上であることが必要です！
 
   ![](./docs/imgs/handson/0.1.png)
 
+  `Close`ボタンを押して、サイトを接続する。
+
+  ![](./docs/imgs/handson/connect_site.png)
+
   ポップアップが表示されるので`Sign`ボタンを押す！
 
   ![](./docs/imgs/handson/5.png)
@@ -250,8 +273,10 @@ node のバージョンは、`18.18.0 ` 以上であることが必要です！
 
 - もう一回コントラクトに保存されている Text の値を取得する。
 
-  初期値は空文字だったが、`hello INTMAXX!!`という文言が取得できるはず！！  
+  初期値は空文字だったが、`hello INTMAXX!!`という文言が取得できるはず！！
   ※ 更新されていない場合は時間をおいて再度実行してみてください。
+
+  別タブを開いて以下を実行。
 
   ```bash
   yarn backend getText --network scrollSepolia
@@ -310,7 +335,7 @@ const createSdk = () => {
 
 これで connect する準備ができました！！
 
-2. の部分については 1.で作成したインスタンスの機能を使って connect しています。  
+2. の部分については 1.で作成したインスタンスの機能を使って connect しています。
    ※ 今回は同時に`eth_sign`API も呼び出して署名も実施するようにしています！
 
 ```ts
