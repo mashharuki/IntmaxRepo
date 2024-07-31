@@ -549,3 +549,5 @@ const gasslessRequest = async () => {
 33. [PLASMACON - 公式サイト](https://plasmacon.tech/)
 34. [INTMAX、ラテンアメリカの著名な Web3 ビルダーを発表。Plasma Free、革新的な EVM 互換プロトコルの開発を主導](https://crypto-times.jp/news-intmax-plasmafree/)
 35. [INTMAX DeveloperHub](https://developers.intmax.io/)
+36. [Plasma Free についての X の投稿](https://twitter.com/intmaxIO/status/1817115708536541388)
+37. [Exit games for EVM validiums: the return of Plasma](https://vitalik.eth.limo/general/2023/11/14/neoplasma.html)
