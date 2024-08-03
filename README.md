@@ -551,3 +551,4 @@ const gasslessRequest = async () => {
 35. [INTMAX DeveloperHub](https://developers.intmax.io/)
 36. [Plasma Free についての X の投稿](https://twitter.com/intmaxIO/status/1817115708536541388)
 37. [Exit games for EVM validiums: the return of Plasma](https://vitalik.eth.limo/general/2023/11/14/neoplasma.html)
+38. [INTMAX Wallet ブラウザアプリ](https://wallet.intmax.io/ja)
