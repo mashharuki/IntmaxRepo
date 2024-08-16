@@ -46,7 +46,7 @@ export const IntmaxProvider = ({
       const client = intmaxDappClient({
         wallet: {
           url: DEFAULT_WALLET_URL,
-          name: "DEMO Wallet",
+          name: "Intmax sdk Demo Wallet",
           //window: { mode: "iframe" },
         },
         metadata: DAPP_METADATA,
