@@ -552,3 +552,6 @@ const gasslessRequest = async () => {
 36. [Plasma Free についての X の投稿](https://twitter.com/intmaxIO/status/1817115708536541388)
 37. [Exit games for EVM validiums: the return of Plasma](https://vitalik.eth.limo/general/2023/11/14/neoplasma.html)
 38. [INTMAX Wallet ブラウザアプリ](https://wallet.intmax.io/ja)
+39. [GitHub - IntMax privacy mining CLI ](https://github.com/InternetMaximalism/intmax2-mining-cli/releases)
+40. [GitHub - InternetMaximalism/intmax2-mining-cli](https://github.com/InternetMaximalism/intmax2-mining-cli?tab=readme-ov-file)
+41. [intmax2-mining-cli - mainnet-quickstart.md](https://github.com/InternetMaximalism/intmax2-mining-cli/blob/main/docs/mainnet-quickstart.md)
