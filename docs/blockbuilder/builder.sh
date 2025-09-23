@@ -1,18 +1,40 @@
 #!/bin/bash
 
+#################################################################################
+# INTMAX2 Block Builder セットアップ・管理スクリプト
+#
+# このスクリプトは INTMAX2 ネットワークのブロックビルダーを
+# セットアップ・管理するためのツールです。
+#
+# 主な機能:
+# - 初期セットアップ（設定ファイル生成）
+# - 環境設定（RPC URL、プライベートキー設定）
+# - サービスの起動・停止・監視
+# - ヘルスチェック機能
+# - 設定検証機能
+# - クリーンアップ機能
+#
+# 使用方法: ./builder.sh [コマンド]
+# 詳細なヘルプ: ./builder.sh help
+#################################################################################
+
+# エラーが発生した場合にスクリプトを終了
 set -e
 
+# API エンドポイントとURL設定
 API_ENDPOINT="https://stage.api.indexer.intmax.io/v1/proxy/meta"
 INDEXER_API_ENDPOINT="https://stage.api.indexer.intmax.io"
 BUILDER_SCRIPT_URL="https://raw.githubusercontent.com/InternetMaximalism/intmax2/refs/heads/main/scripts/block-builder-testnet.sh"
 
+# 期待されるネットワーク設定
 EXPECTED_NETWORK_ID="534351"
 EXPECTED_NETWORK_NAME="Scroll Sepolia Testnet"
 ENVIRONMENT="testnet"
 
+# 許可されたドメインのリスト（セキュリティ対策）
 ALLOWED_DOMAINS="intmax.io,raw.githubusercontent.com"
 
-# .env
+# 環境変数用の設定値
 REGISTRATION_FEE=0:2500000000000
 NON_REGISTRATION_FEE=0:2000000000000
 STORE_VAULT_SERVER_BASE_URL=https://stage.api.node.intmax.io/store-vault-server
@@ -20,11 +42,12 @@ VALIDITY_PROVER_BASE_URL=https://stage.api.node.intmax.io/validity-prover
 ROLLUP_CONTRACT_ADDRESS=0xcEC03800074d0ac0854bF1f34153cc4c8bAEeB1E
 BLOCK_BUILDER_REGISTRY_CONTRACT_ADDRESS=0x93a41F47ed161AB2bc58801F07055f2f05dfc74E
 
-# api
+# API から取得する変数（初期値は空）
 INTMAX2_VERSION=""
 PROXY_DOMAIN=""
 FRP_TOKEN=""
 
+# 環境名から内部環境変数を設定する関数
 set_env_from_environment() {
     case "$ENVIRONMENT" in
         "devnet")
@@ -53,25 +76,27 @@ else
     exit 1
 fi
 
+# 現在の環境設定を色付きで表示する関数
 show_current_environment() {
     if set_env_from_environment; then
         local env_color=""
         local env_label=""
+        # 環境に応じて表示色を設定
         case "$ENVIRONMENT" in
             "devnet")
-                env_color="\033[1;36m"
+                env_color="\033[1;36m"  # シアン色
                 env_label="🔧 DEVELOPMENT"
                 ;;
             "testnet")
-                env_color="\033[1;33m"
+                env_color="\033[1;33m"  # 黄色
                 env_label="🧪 TESTNET"
                 ;;
             "mainnet")
-                env_color="\033[1;32m"
+                env_color="\033[1;32m"  # 緑色
                 env_label="🚀 MAINNET"
                 ;;
         esac
-        local reset_color="\033[0m"
+        local reset_color="\033[0m"  # 色をリセット
 
         echo ""
         echo "═══════════════════════════════════════════════════════════════"
@@ -87,28 +112,36 @@ show_current_environment() {
     fi
 }
 
+# API エンドポイントのセキュリティ検証を行う関数
 validate_api_endpoint() {
     local endpoint="$1"
 
+    # HTTPS必須チェック
     if ! echo "$endpoint" | grep -q "^https://"; then
         echo "❌ API endpoint must use HTTPS"
         return 1
     fi
 
+    # ドメイン部分を抽出
     local domain=$(echo "$endpoint" | sed 's|https://||' | cut -d'/' -f1)
 
+    # 許可されたドメインリストを配列に変換
     IFS=',' read -ra allowed_domains_array <<< "$ALLOWED_DOMAINS"
 
+    # ドメインの許可チェック
     local domain_allowed=false
     for allowed_domain in "${allowed_domains_array[@]}"; do
+        # 前後の空白を削除
         allowed_domain=$(echo "$allowed_domain" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
 
+        # ドメインが完全一致またはサブドメインが許可されているかチェック
         if [ "$domain" = "$allowed_domain" ] || echo "$domain" | grep -q "\\.${allowed_domain}$"; then
             domain_allowed=true
             break
         fi
     done
 
+    # 結果を返す
     if [ "$domain_allowed" = true ]; then
         return 0
     else
@@ -118,38 +151,46 @@ validate_api_endpoint() {
     fi
 }
 
+# API レスポンスの妥当性を検証する関数
 validate_api_response() {
     local response="$1"
 
+    # 空のレスポンスチェック
     if [ -z "$response" ]; then
         echo "❌ Empty API response"
         return 1
     fi
 
+    # JSONフォーマットの妥当性チェック
     if ! echo "$response" | jq empty 2>/dev/null; then
         echo "❌ Invalid JSON response from API"
         return 1
     fi
 
+    # 必要なフィールドを抽出
     local domain=$(echo "$response" | jq -r '.domain // empty')
     local token=$(echo "$response" | jq -r '.token // empty')
     local version=$(echo "$response" | jq -r '.version // empty')
 
+    # 必須フィールドの存在チェック
     if [ -z "$domain" ] || [ -z "$token" ] || [ -z "$version" ]; then
         echo "❌ Missing required fields in API response"
         return 1
     fi
 
+    # ドメインフォーマットの妥当性チェック
     if ! echo "$domain" | grep -E '^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' >/dev/null; then
         echo "❌ Invalid domain format: $domain"
         return 1
     fi
 
+    # バージョンフォーマットの妥当性チェック（セマンティックバージョニング）
     if ! echo "$version" | grep -E '^v?[0-9]+\.[0-9]+\.[0-9]+' >/dev/null; then
         echo "❌ Invalid version format: $version"
         return 1
     fi
 
+    # トークンに危険な文字が含まれていないかチェック
     if echo "$token" | grep -E '[[:space:]<>"\|&;`$()]' >/dev/null; then
         echo "❌ Token contains invalid characters"
         return 1
@@ -158,28 +199,34 @@ validate_api_response() {
     return 0
 }
 
+# API レスポンスから必要な値を解析して変数に設定する関数
 parse_api_response() {
     local response="$1"
 
+    # jq コマンドが利用可能な場合は高品質なJSONパースを使用
     if command -v jq >/dev/null 2>&1; then
         PROXY_DOMAIN=$(echo "$response" | jq -r '.domain // empty')
         FRP_TOKEN=$(echo "$response" | jq -r '.token // empty')
         local api_version=$(echo "$response" | jq -r '.version // empty')
 
+        # バージョン番号から先頭の'v'を削除
         if [ -n "$api_version" ]; then
             INTMAX2_VERSION=$(echo "$api_version" | sed 's/^v//')
         fi
     else
+        # jq が利用できない場合は基本的な文字列操作でパース
         echo "⚠️  jq not found, using basic parsing"
         PROXY_DOMAIN=$(echo "$response" | grep -o '"domain":"[^"]*"' | cut -d':' -f2 | tr -d '"')
         FRP_TOKEN=$(echo "$response" | grep -o '"token":"[^"]*"' | cut -d':' -f2 | tr -d '"')
         local api_version=$(echo "$response" | grep -o '"version":"[^"]*"' | cut -d':' -f2 | tr -d '"')
 
+        # バージョン番号から先頭の'v'を削除
         if [ -n "$api_version" ]; then
             INTMAX2_VERSION=$(echo "$api_version" | sed 's/^v//')
         fi
     fi
 
+    # 必要な値がすべて取得できたかチェック
     if [ -z "$PROXY_DOMAIN" ] || [ -z "$FRP_TOKEN" ] || [ -z "$INTMAX2_VERSION" ]; then
         echo "❌ Failed to parse required values from API response"
         return 1
@@ -188,13 +235,19 @@ parse_api_response() {
     return 0
 }
 
+# 設定値のサニタイズとセキュリティ検証を行う関数
 sanitize_config_values() {
+    # プロキシドメインのサニタイズ
     if [ -n "$PROXY_DOMAIN" ]; then
+        # 英数字、ドット、ハイフン以外の文字を除去
         local sanitized_domain=$(echo "$PROXY_DOMAIN" | sed 's/[^a-zA-Z0-9.-]//g')
 
+        # ドメイン名の正規表現による妥当性チェック
         if echo "$sanitized_domain" | grep -qE '^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$'; then
+            # 許可されたドメインリストを配列に変換
             IFS=',' read -ra allowed_domains_array <<< "$ALLOWED_DOMAINS"
 
+            # ドメインが許可リストに含まれているかチェック
             local domain_allowed=false
             for allowed_domain in "${allowed_domains_array[@]}"; do
                 allowed_domain=$(echo "$allowed_domain" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
@@ -221,11 +274,15 @@ sanitize_config_values() {
         return 1
     fi
 
+    # FRPトークンのサニタイズ
     if [ -n "$FRP_TOKEN" ]; then
+        # 英数字、アンダースコア、ハイフン以外の文字を除去
         local sanitized_token=$(echo "$FRP_TOKEN" | sed 's/[^a-zA-Z0-9_-]//g')
 
+        # トークン長の妥当性チェック（32〜128文字）
         local token_length=$(echo -n "$sanitized_token" | wc -c)
         if [ "$token_length" -ge 32 ] && [ "$token_length" -le 128 ]; then
+            # トークンの開始・終了文字が英数字であることをチェック
             if echo "$sanitized_token" | grep -qE '^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$'; then
                 FRP_TOKEN="$sanitized_token"
             else
@@ -241,17 +298,23 @@ sanitize_config_values() {
         return 1
     fi
 
+    # バージョン番号のサニタイズ
     if [ -n "$INTMAX2_VERSION" ]; then
+        # 英数字、ドット、ハイフン以外の文字を除去
         local sanitized_version=$(echo "$INTMAX2_VERSION" | sed 's/[^a-zA-Z0-9.-]//g')
 
+        # セマンティックバージョニング形式の妥当性チェック（例: 1.2.3 または 1.2.3-alpha.1）
         if echo "$sanitized_version" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.-]+)?$'; then
+            # メジャー、マイナー、パッチバージョンを抽出
             local major=$(echo "$sanitized_version" | cut -d'.' -f1)
             local minor=$(echo "$sanitized_version" | cut -d'.' -f2)
             local patch=$(echo "$sanitized_version" | cut -d'.' -f3 | cut -d'-' -f1)
 
+            # 各バージョン番号が有効範囲内であることをチェック（0-999）
             if [ "$major" -ge 0 ] && [ "$major" -le 999 ] && \
                [ "$minor" -ge 0 ] && [ "$minor" -le 999 ] && \
                [ "$patch" -ge 0 ] && [ "$patch" -le 999 ]; then
+                # 0.0.0は無効なバージョンとして扱う
                 if [ "$major" -eq 0 ] && [ "$minor" -eq 0 ] && [ "$patch" -eq 0 ]; then
                     echo "❌ INTMAX2_VERSION cannot be 0.0.0: $sanitized_version"
                     return 1
@@ -271,6 +334,7 @@ sanitize_config_values() {
         return 1
     fi
 
+    # 最終的に全ての設定値が適切に設定されているかチェック
     if [ -z "$PROXY_DOMAIN" ] || [ -z "$FRP_TOKEN" ] || [ -z "$INTMAX2_VERSION" ]; then
         echo "❌ One or more configuration values became empty after sanitization"
         echo "   PROXY_DOMAIN: ${PROXY_DOMAIN:-'<empty>'}"
@@ -282,19 +346,24 @@ sanitize_config_values() {
     return 0
 }
 
+# API から設定情報を取得し検証する関数
 fetch_api_config() {
+    # APIエンドポイントの妥当性チェック
     if ! validate_api_endpoint "$API_ENDPOINT"; then
         return 1
     fi
 
+    # curlコマンドの存在チェック
     if ! command -v curl >/dev/null 2>&1; then
         echo "❌ curl not found. Please install curl to fetch API configuration."
         return 1
     fi
 
     local api_response
+    # curlのオプション: サイレント、10秒タイムアウト、HTTPエラー時に終了
     local curl_options="-s --max-time 10 --fail"
 
+    # APIからレスポンスを取得し、各段階で検証を実行
     if api_response=$(curl $curl_options "$API_ENDPOINT" 2>/dev/null); then
         if validate_api_response "$api_response"; then
             if parse_api_response "$api_response"; then
@@ -309,6 +378,7 @@ fetch_api_config() {
     return 1
 }
 
+# 設定情報を読み込む関数（APIから取得に失敗した場合は終了）
 load_config() {
     if ! fetch_api_config; then
         echo "❌ API fetch failed, cannot proceed without valid configuration"
@@ -318,23 +388,29 @@ load_config() {
     fi
 }
 
+# システムアーキテクチャを検出して適切なDockerイメージを選択する関数
 detect_architecture() {
     local arch=$(uname -m)
     case $arch in
         aarch64|arm64)
+            # ARM64アーキテクチャ用のイメージ
             echo "ghcr.io/internetmaximalism/intmax2:${INTMAX2_VERSION}-arm64"
             ;;
         x86_64|amd64)
+            # x86_64アーキテクチャ用のイメージ（デフォルト）
             echo "ghcr.io/internetmaximalism/intmax2:${INTMAX2_VERSION}"
             ;;
         *)
+            # 未知のアーキテクチャの場合はx86_64を使用
             echo "⚠️  Unknown architecture: $arch. Using default x86_64 image."
             echo "ghcr.io/internetmaximalism/intmax2:${INTMAX2_VERSION}"
             ;;
     esac
 }
 
+# UUID（一意識別子）を生成する関数
 generate_uuid() {
+    # uuidgenコマンドの存在チェック
     if ! command -v uuidgen >/dev/null 2>&1; then
         echo "❌ uuidgen is required but not found" >&2
         echo "" >&2
@@ -343,12 +419,15 @@ generate_uuid() {
         return 1
     fi
 
+    # UUIDを生成して小文字に変換
     uuidgen | tr '[:upper:]' '[:lower:]'
 }
 
+# 必要なツールの存在をチェックする関数
 check_required_tools() {
     local missing_tools=()
 
+    # 必須ツールの存在確認
     if ! command -v uuidgen >/dev/null 2>&1; then
         missing_tools+=("uuidgen")
     fi
@@ -361,11 +440,13 @@ check_required_tools() {
         missing_tools+=("docker")
     fi
 
+    # 推奨ツールの存在確認
     local recommended_tools=()
     if ! command -v jq >/dev/null 2>&1; then
         recommended_tools+=("jq")
     fi
 
+    # 必須ツールが不足している場合はエラーを表示
     if [ ${#missing_tools[@]} -gt 0 ]; then
         echo "❌ Missing required tools: ${missing_tools[*]}"
         echo ""
@@ -380,6 +461,7 @@ check_required_tools() {
         return 1
     fi
 
+    # 推奨ツールが不足している場合は警告を表示
     if [ ${#recommended_tools[@]} -gt 0 ]; then
         echo "⚠️  Recommended tools not found: ${recommended_tools[*]}"
         echo "   These tools will improve the script's functionality"
@@ -390,7 +472,9 @@ check_required_tools() {
     return 0
 }
 
+# Docker Swarm モードの有効性をチェックする関数
 check_docker_swarm() {
+    # Docker の情報からSwarmが有効かどうかを確認
     if ! docker info 2>/dev/null | grep -q "Swarm: active"; then
         echo "⚠️  Docker Swarm is not active"
         echo "💡 To enable Docker Swarm: docker swarm init"
@@ -400,13 +484,17 @@ check_docker_swarm() {
     return 0
 }
 
+# Docker Secret の存在をチェックする関数
 check_docker_secret() {
+    # まずDocker Swarmが有効かチェック
     if ! check_docker_swarm; then
         return 1
     fi
 
+    # 環境に応じたSecret名を生成
     local secret_name="block_builder_private_key_${ENVIRONMENT}"
 
+    # Docker Secretの存在確認
     if docker secret ls 2>/dev/null | grep -q "$secret_name"; then
         echo "✅ Docker secret '$secret_name' exists"
         return 0
@@ -417,10 +505,12 @@ check_docker_secret() {
     fi
 }
 
+# プライベートキーの設定状況をチェックする関数
 check_private_key_config() {
     local has_docker_secret=false
     local secret_name="block_builder_private_key_${ENVIRONMENT}"
 
+    # Docker SwarmとSecretの存在を確認
     if check_docker_swarm >/dev/null 2>&1; then
         if docker secret ls 2>/dev/null | grep -q "$secret_name"; then
             has_docker_secret=true
@@ -428,6 +518,7 @@ check_private_key_config() {
         fi
     fi
 
+    # プライベートキーが設定されていない場合はエラー
     if [ "$has_docker_secret" = false ]; then
         echo "❌ No private key configuration found"
         echo "💡 Please set up environment using:"
@@ -605,9 +696,10 @@ check_rpc_connectivity() {
     fi
 }
 
+# ユーザーに確認を求める関数
 confirm_action() {
-    local message="${1:-Are you sure?}"
-    local default="${2:-N}"
+    local message="${1:-Are you sure?}"  # 確認メッセージ（デフォルト: "Are you sure?"）
+    local default="${2:-N}"              # デフォルト値（デフォルト: "N"）
 
     echo "❓ $message (y/n)"
 
@@ -638,9 +730,12 @@ confirm_action() {
     esac
 }
 
+# 初期セットアップを実行する関数（設定ファイル生成）
 setup() {
+    # 現在の環境設定を表示
     show_current_environment
 
+    # 必要なツールの存在確認
     echo "🔍 Checking required tools..."
     if ! check_required_tools; then
         echo "❌ Setup cannot continue without required tools"
@@ -649,6 +744,7 @@ setup() {
     fi
     echo ""
 
+    # 既存の設定ファイルが存在する場合は警告して終了
     if [ -f "frpc.toml" ] || [ -f "docker-compose.yml" ] || [ -f ".env.${ENVIRONMENT}" ] || [ -f "nginx.conf" ]; then
         echo "⚠️  Setup files already exist. The following files were found:"
         [ -f "frpc.toml" ] && echo "   - frpc.toml"
@@ -663,14 +759,18 @@ setup() {
         echo "   $0 clean && $0 setup"
         return 1
     fi
+    
+    # API設定を読み込み
     load_config
 
+    # 一意識別子（UUID）を生成
     uuid=$(generate_uuid)
     if [ $? -ne 0 ]; then
         echo "❌ Failed to generate UUID"
         exit 1
     fi
 
+    # システムアーキテクチャに応じたDockerイメージを選択
     docker_image=$(detect_architecture)
 
     cat > frpc.toml << EOF
@@ -830,9 +930,11 @@ EOF
     echo "   3. Run: $0 run"
 }
 
+# 環境設定を行う関数（RPC URL とプライベートキーの設定）
 setup_env() {
     echo "🌍 Setting up environment configuration..."
 
+    # 環境設定ファイルの存在確認
     local env_file=".env.${ENVIRONMENT}"
 
     if [ ! -f "$env_file" ]; then
@@ -841,6 +943,7 @@ setup_env() {
         return 1
     fi
 
+    # Dockerの状態確認
     echo "🐳 Checking Docker status..."
     if ! docker info >/dev/null 2>&1; then
         echo "❌ Docker is not running or not accessible"
@@ -848,6 +951,7 @@ setup_env() {
         return 1
     fi
 
+    # Docker Swarmの有効性確認
     if ! docker info 2>/dev/null | grep -q "Swarm: active"; then
         echo "❌ Docker Swarm is not active"
         echo "💡 Run: docker swarm init"
@@ -1074,9 +1178,11 @@ setup_env() {
     echo "   2. Start services: $0 run"
 }
 
+# 環境設定の妥当性を検証する関数
 verify_env() {
     echo "🔍 Verifying environment configuration..."
 
+    # 環境ファイルの存在確認
     local env_file=".env.${ENVIRONMENT}"
 
     if [ ! -f "$env_file" ]; then
@@ -1088,9 +1194,11 @@ verify_env() {
     echo "✅ $env_file file exists"
     echo ""
 
+    # 検証結果を追跡するフラグ
     local verification_passed=true
     local network_mismatch=false
 
+    # L2_RPC_URL の設定確認
     echo "🌐 Checking L2_RPC_URL configuration..."
     local l2_rpc_url=$(grep "^L2_RPC_URL=" "$env_file" 2>/dev/null | cut -d'=' -f2-)
 
@@ -1470,15 +1578,19 @@ check() {
     echo "💡 Next step: $0 run"
 }
 
+# Docker Stackサービスを起動する関数
 run() {
+    # 現在の環境設定を表示
     show_current_environment
 
+    # 必要な設定ファイルの存在確認
     if [ ! -f "frpc.toml" ] || [ ! -f "nginx.conf" ]; then
         echo "❌ Configuration files not found"
         echo "Run: $0 setup first"
         return 1
     fi
 
+    # Dockerの状態確認
     echo "🐳 Checking Docker status..."
     if ! docker info >/dev/null 2>&1; then
         echo "❌ Docker is not running or not accessible"
@@ -1486,6 +1598,7 @@ run() {
         return 1
     fi
 
+    # プライベートキー設定の確認
     echo "🔐 Checking private key configuration..."
     if ! check_private_key_config; then
         echo "❌ Cannot start without private key configuration"
@@ -1555,19 +1668,23 @@ run() {
     echo "💡 To monitor the services, run: $0 monitor"
 }
 
+# Docker Stackサービスを停止する関数
 stop() {
+    # 設定ファイルの存在確認
     if [ ! -f "docker-compose.yml" ]; then
         echo "❌ docker-compose.yml not found"
         echo "Run: $0 setup first"
         return 1
     fi
 
+    # ユーザー確認
     if ! confirm_action "Are you sure you want to stop Docker Stack services?"; then
         return 0
     fi
 
     echo "🛑 Stopping Docker Stack services..."
 
+    # Dockerの状態確認
     echo "🐳 Checking Docker status..."
     if ! docker info >/dev/null 2>&1; then
         echo "❌ Docker is not running or not accessible"
@@ -1575,6 +1692,7 @@ stop() {
         return 1
     fi
 
+    # Docker Swarmの状態確認
     if ! docker info 2>/dev/null | grep -q "Swarm: active"; then
         echo "⚠️  Docker Swarm is not active, no stack to stop"
         return 0
@@ -1603,20 +1721,24 @@ stop() {
     echo "💡 To restart, run: $0 run"
 }
 
+# ブロックビルダーサービスのヘルスチェックを実行する関数
 health_check() {
     echo "🩺 Testing your block builder health..."
 
+    # curlコマンドの存在確認
     if ! command -v curl >/dev/null 2>&1; then
         echo "❌ curl not found. Cannot test health check."
         return 1
     fi
 
+    # 設定ファイルの存在確認
     if [ ! -f "frpc.toml" ]; then
         echo "❌ frpc.toml not found"
         echo "💡 Run: $0 setup first to create configuration"
         return 1
     fi
 
+    # 設定ファイルからサーバーアドレスとUUIDを抽出
     local server_addr=$(grep "serverAddr" frpc.toml | sed 's/serverAddr = "\([^"]*\)"/\1/')
     local uuid=$(grep "locations" frpc.toml | sed 's/.*\/\([^"]*\)".*/\1/')
 
@@ -1839,15 +1961,19 @@ health_check() {
     fi
 }
 
+# Docker Stackサービスの状態を監視する関数
 monitor() {
+    # 設定ファイルの存在確認
     if [ ! -f "docker-compose.yml" ]; then
         echo "❌ docker-compose.yml not found"
         echo "Run: $0 setup first"
         return 1
     fi
 
+    # スタック名を設定
     stack_name="block-builder-stack-${ENVIRONMENT}"
 
+    # Dockerの状態確認
     echo "🐳 Checking Docker status..."
     if ! docker info >/dev/null 2>&1; then
         echo "❌ Docker is not running or not accessible"
@@ -2205,38 +2331,50 @@ version() {
     echo "   Expected Docker Image: $(detect_architecture 2>/dev/null || echo 'ghcr.io/internetmaximalism/intmax2:${intmax2_version}')"
 }
 
+# メインの処理分岐（コマンドライン引数に基づいて適切な関数を呼び出し）
 case "${1:-help}" in
     setup)
+        # 初期セットアップ（設定ファイル生成）
         setup
         ;;
     setup-env)
+        # 環境設定（RPC URL とプライベートキー設定）
         setup_env
         ;;
     verify-env)
+        # 環境設定の検証
         verify_env
         ;;
     check)
+        # 設定ファイルの存在確認と内容表示
         check
         ;;
     run)
+        # サービス起動
         run
         ;;
     stop)
+        # サービス停止
         stop
         ;;
     health)
+        # ヘルスチェック実行
         health_check
         ;;
     monitor)
+        # サービス監視
         monitor
         ;;
     update)
+        # スクリプトの更新
         update
         ;;
     docker-clean)
+        # Dockerリソースのクリーンアップ
         docker_clean
         ;;
     clean)
+        # 完全クリーンアップ
         clean
         ;;
     version)
